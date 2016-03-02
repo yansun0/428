@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="9515"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="prototype_WatchKit_Extension">
+                    <items>
+                        <group width="1" height="0.59999999999999998" alignment="left" layout="vertical" id="ztJ-Of-wFF">
+                            <items>
+                                <label width="1" alignment="center" verticalAlignment="center" text="Trial: x" textAlignment="center" id="dyO-ep-be6"/>
+                                <label width="1" alignment="center" verticalAlignment="center" text="Mode: x" textAlignment="center" id="bAF-d9-Enz"/>
+                            </items>
+                        </group>
+                        <button width="1" height="0.40000000000000002" alignment="left" title="Start" id="gNs-eJ-GcX">
+                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="backgroundColor" red="0.60784313725490191" green="1" blue="0.031372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" type="system" weight="medium" pointSize="28"/>
+                            <connections>
+                                <action selector="StartButton" destination="AgC-eL-Hgc" id="Bg1-dx-rw6"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <connections>
+                        <outlet property="mode" destination="bAF-d9-Enz" id="ZRz-tv-eVf"/>
+                        <outlet property="trial" destination="dyO-ep-be6" id="Ocs-ow-Pc3"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="126" y="-4"/>
+        </scene>
+        <!--ticker-controller-->
+        <scene sceneID="PoW-gW-S9L">
+            <objects>
+                <controller identifier="ticker-controller" id="rHv-23-DP9" customClass="TickerController" customModule="prototype_WatchKit_Extension">
+                    <items>
+                        <label width="1" height="1" alignment="left" text="Ticker" textAlignment="center" id="xsz-Jy-DpA"/>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="298" y="227"/>
+        </scene>
+        <!--scroll-controller-->
+        <scene sceneID="kT6-do-NL0">
+            <objects>
+                <controller identifier="scroll-controller" id="bXb-1Q-X8p" customClass="ScrollController" customModule="prototype_WatchKit_Extension">
+                    <items>
+                        <label width="1" height="1" alignment="left" text="Scroll" textAlignment="center" id="Yg6-bV-G9L"/>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="126" y="227"/>
+        </scene>
+        <!--rsvp-controller-->
+        <scene sceneID="FK3-kr-otY">
+            <objects>
+                <controller identifier="rsvp-controller" id="M7f-2J-zrb" customClass="RSVPController" customModule="prototype_WatchKit_Extension">
+                    <items>
+                        <label width="1" height="1" alignment="left" text="RSVP" textAlignment="center" id="8Ci-17-HMp"/>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="298" y="-4"/>
+        </scene>
+    </scenes>
+</document>
