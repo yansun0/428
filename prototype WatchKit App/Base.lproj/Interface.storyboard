@@ -12,12 +12,11 @@
                     <items>
                         <group width="1" height="0.59999999999999998" alignment="left" layout="vertical" id="ztJ-Of-wFF">
                             <items>
-                                <label width="1" alignment="center" verticalAlignment="center" text="Trial: x" textAlignment="center" id="dyO-ep-be6"/>
-                                <label width="1" alignment="center" verticalAlignment="center" text="Mode: x" textAlignment="center" id="bAF-d9-Enz"/>
+                                <label width="1" height="1" alignment="left" text="Please wait for the next trial to start." textAlignment="center" numberOfLines="0" id="9c7-nG-JUA"/>
                             </items>
                         </group>
                         <button width="1" height="0.40000000000000002" alignment="left" title="Start" id="gNs-eJ-GcX">
-                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" red="0.60784313725490191" green="1" blue="0.031372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" weight="medium" pointSize="28"/>
                             <connections>
@@ -26,8 +25,8 @@
                         </button>
                     </items>
                     <connections>
-                        <outlet property="mode" destination="bAF-d9-Enz" id="ZRz-tv-eVf"/>
-                        <outlet property="trial" destination="dyO-ep-be6" id="Ocs-ow-Pc3"/>
+                        <outlet property="button" destination="gNs-eJ-GcX" id="N1C-q3-kG1"/>
+                        <outlet property="message" destination="9c7-nG-JUA" id="h3n-lY-kvo"/>
                     </connections>
                 </controller>
             </objects>
@@ -38,8 +37,11 @@
             <objects>
                 <controller identifier="ticker-controller" id="rHv-23-DP9" customClass="TickerController" customModule="prototype_WatchKit_Extension">
                     <items>
-                        <label width="1" height="1" alignment="left" text="Ticker" textAlignment="center" id="xsz-Jy-DpA"/>
+                        <imageView width="1" height="1" alignment="left" id="a0V-b9-E3c"/>
                     </items>
+                    <connections>
+                        <outlet property="canvas" destination="a0V-b9-E3c" id="e3M-Bm-aZq"/>
+                    </connections>
                 </controller>
             </objects>
             <point key="canvasLocation" x="298" y="227"/>
@@ -49,8 +51,13 @@
             <objects>
                 <controller identifier="scroll-controller" id="bXb-1Q-X8p" customClass="ScrollController" customModule="prototype_WatchKit_Extension">
                     <items>
-                        <label width="1" height="1" alignment="left" text="Scroll" textAlignment="center" id="Yg6-bV-G9L"/>
+                        <label width="1" alignment="left" text="Insert Scroll Text" textAlignment="justified" numberOfLines="0" id="Yg6-bV-G9L">
+                            <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                        </label>
                     </items>
+                    <connections>
+                        <outlet property="label" destination="Yg6-bV-G9L" id="OGg-Vq-a3e"/>
+                    </connections>
                 </controller>
             </objects>
             <point key="canvasLocation" x="126" y="227"/>
