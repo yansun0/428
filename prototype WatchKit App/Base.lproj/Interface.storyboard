@@ -37,7 +37,7 @@
             <objects>
                 <controller identifier="ticker-controller" id="rHv-23-DP9" customClass="TickerController" customModule="prototype_WatchKit_Extension">
                     <items>
-                        <imageView width="1" height="1" alignment="left" id="a0V-b9-E3c"/>
+                        <imageView width="1" height="0.20000000000000001" alignment="left" verticalAlignment="center" contentMode="center" id="a0V-b9-E3c"/>
                     </items>
                     <connections>
                         <outlet property="canvas" destination="a0V-b9-E3c" id="e3M-Bm-aZq"/>
@@ -52,7 +52,7 @@
                 <controller identifier="scroll-controller" id="bXb-1Q-X8p" customClass="ScrollController" customModule="prototype_WatchKit_Extension">
                     <items>
                         <label width="1" alignment="left" text="Insert Scroll Text" textAlignment="justified" numberOfLines="0" id="Yg6-bV-G9L">
-                            <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                            <fontDescription key="font" type="system" pointSize="20"/>
                         </label>
                     </items>
                     <connections>

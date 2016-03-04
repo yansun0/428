@@ -17,18 +17,17 @@ class ScrollController : WKInterfaceController {
     override func awakeWithContext( context : AnyObject? ) {
         super.awakeWithContext( context )
         
-        if let data = context as? [ String : AnyObject ] {
-            if let text = data[ "text" ] as? String,
-                   attrs = data[ "attrs"] as? [ String : AnyObject ] {
-                let attrText = NSAttributedString.init( string : text, attributes : attrs )
-                label.setAttributedText( attrText )
-            }
-            if let time = data[ "duration" ] as? Int {
-                let timeLimit = NSTimeInterval.init( time )
-                self.timeout = NSTimer.scheduledTimerWithTimeInterval( timeLimit,
-                    target : self, selector : "end",
-                    userInfo : nil, repeats : true )
-            }
+        if let data = context as? [ String : AnyObject ],
+               text = data[ "text" ] as? String,
+               attrs = data[ "attrs"] as? [ String : AnyObject ],
+               time = data[ "duration" ] as? NSTimeInterval {
+                
+            let attrText = NSAttributedString.init( string : text, attributes : attrs )
+            label.setAttributedText( attrText )
+
+            self.timeout = NSTimer.scheduledTimerWithTimeInterval( time,
+                target : self, selector : "end",
+                userInfo : nil, repeats : true )
         }
     }
     

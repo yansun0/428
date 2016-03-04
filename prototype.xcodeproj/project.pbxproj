@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C64F8F31C89751100594D26 /* TextMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C64F8F21C89751100594D26 /* TextMode.swift */; };
+		2C64F8F41C89751100594D26 /* TextMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C64F8F21C89751100594D26 /* TextMode.swift */; };
 		2C6F6F561C8636D80090C94F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6F6F551C8636D80090C94F /* AppDelegate.swift */; };
 		2C6F6F581C8636D80090C94F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6F6F571C8636D80090C94F /* ViewController.swift */; };
 		2C6F6F5B1C8636D80090C94F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C6F6F591C8636D80090C94F /* Main.storyboard */; };
@@ -67,6 +69,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2C64F8F21C89751100594D26 /* TextMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMode.swift; sourceTree = "<group>"; };
 		2C6F6F521C8636D80090C94F /* prototype.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = prototype.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C6F6F551C8636D80090C94F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C6F6F571C8636D80090C94F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 		2C6F6F491C8636D70090C94F = {
 			isa = PBXGroup;
 			children = (
+				2C64F8F21C89751100594D26 /* TextMode.swift */,
 				2C6F6F541C8636D80090C94F /* prototype */,
 				2C6F6F681C8636D80090C94F /* prototype WatchKit App */,
 				2C6F6F771C8636D80090C94F /* prototype WatchKit Extension */,
@@ -304,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C6F6F581C8636D80090C94F /* ViewController.swift in Sources */,
+				2C64F8F31C89751100594D26 /* TextMode.swift in Sources */,
 				2C6F6F561C8636D80090C94F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -313,6 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C6F6F911C8648F60090C94F /* RSVPController.swift in Sources */,
+				2C64F8F41C89751100594D26 /* TextMode.swift in Sources */,
 				2C6F6F7B1C8636D80090C94F /* ExtensionDelegate.swift in Sources */,
 				2C6F6F791C8636D80090C94F /* InterfaceController.swift in Sources */,
 				2C6F6F951C86492B0090C94F /* ScrollController.swift in Sources */,
@@ -547,6 +553,7 @@
 				2C6F6F831C8636D80090C94F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2C6F6F851C8636D80090C94F /* Build configuration list for PBXNativeTarget "prototype WatchKit App" */ = {
 			isa = XCConfigurationList;
@@ -555,6 +562,7 @@
 				2C6F6F871C8636D80090C94F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2C6F6F891C8636D80090C94F /* Build configuration list for PBXNativeTarget "prototype" */ = {
 			isa = XCConfigurationList;
@@ -563,6 +571,7 @@
 				2C6F6F8B1C8636D80090C94F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
