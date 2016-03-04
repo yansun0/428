@@ -20,7 +20,7 @@
                             <color key="backgroundColor" red="0.60784313725490191" green="1" blue="0.031372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" weight="medium" pointSize="28"/>
                             <connections>
-                                <action selector="StartButton" destination="AgC-eL-Hgc" id="Bg1-dx-rw6"/>
+                                <action selector="StartButton" destination="AgC-eL-Hgc" id="rpr-jf-eD7"/>
                             </connections>
                         </button>
                     </items>
@@ -31,20 +31,6 @@
                 </controller>
             </objects>
             <point key="canvasLocation" x="126" y="-4"/>
-        </scene>
-        <!--ticker-controller-->
-        <scene sceneID="PoW-gW-S9L">
-            <objects>
-                <controller identifier="ticker-controller" id="rHv-23-DP9" customClass="TickerController" customModule="prototype_WatchKit_Extension">
-                    <items>
-                        <imageView width="1" height="0.20000000000000001" alignment="left" verticalAlignment="center" contentMode="center" id="a0V-b9-E3c"/>
-                    </items>
-                    <connections>
-                        <outlet property="canvas" destination="a0V-b9-E3c" id="e3M-Bm-aZq"/>
-                    </connections>
-                </controller>
-            </objects>
-            <point key="canvasLocation" x="298" y="227"/>
         </scene>
         <!--scroll-controller-->
         <scene sceneID="kT6-do-NL0">
@@ -60,15 +46,18 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="126" y="227"/>
+            <point key="canvasLocation" x="467" y="-4"/>
         </scene>
-        <!--rsvp-controller-->
+        <!--canvas-controller-->
         <scene sceneID="FK3-kr-otY">
             <objects>
-                <controller identifier="rsvp-controller" id="M7f-2J-zrb" customClass="RSVPController" customModule="prototype_WatchKit_Extension">
+                <controller identifier="canvas-controller" id="M7f-2J-zrb" customClass="CanvasController" customModule="prototype_WatchKit_Extension">
                     <items>
-                        <label width="1" height="1" alignment="left" text="RSVP" textAlignment="center" id="8Ci-17-HMp"/>
+                        <imageView width="1" height="0.20000000000000001" alignment="center" verticalAlignment="center" id="flb-CX-Olg"/>
                     </items>
+                    <connections>
+                        <outlet property="canvas" destination="flb-CX-Olg" id="WU0-wi-eAd"/>
+                    </connections>
                 </controller>
             </objects>
             <point key="canvasLocation" x="298" y="-4"/>

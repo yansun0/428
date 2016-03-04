@@ -12,6 +12,8 @@ import UIKit
 import WatchKit
 #endif
 
+let TRIAL_TIME : Int = 5
+
 enum TextMode {
     case Scroll
     case Ticker
@@ -28,9 +30,13 @@ enum TextMode {
     var controllerName : String {
         switch self {
             case .Scroll: return "scroll-controller"
-            case .Ticker: return "ticker-controller"
-            case .RSVP: return "rsvp-controller"
+            case .Ticker, .RSVP: return "canvas-controller"
         }
+    }
+    
+    // in seconds
+    var duration : NSTimeInterval {
+        return NSTimeInterval.init( TRIAL_TIME - ( self == .Scroll ? 0 : 1 ) )
     }
     
     var fontSize : CGFloat {
@@ -39,8 +45,8 @@ enum TextMode {
     
     var lineHeight : CGFloat {
         switch self {
-            case .Scroll: return self.fontSize + 1.0
-            default: return self.fontSize
+            case .Scroll : return self.fontSize + 1.0
+            case .Ticker, .RSVP : return self.fontSize
         }
     }
     
