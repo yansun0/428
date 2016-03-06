@@ -58,18 +58,21 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
     }
     
     
-//    // Received message from iPhone
+    // Received message from iPhone
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
         print(__FUNCTION__)
-        guard message["request"] as? String == "showAlert" else {return}
+        //guard message["request"] as? String == "showAlert" else {return}
+        
+        let groupString:[String] = message["request"] as! [String]
+        
+        // @YAN: THE GROUPSTRING ARRAY CONTAINS ALL THE STRINGS IN THE CORRECT ORDER.
+        // I GUESS 1 STRING PER TRIAL.
         
         let defaultAction = WKAlertAction(
             title: "OK",
             style: WKAlertActionStyle.Default) { () -> Void in
         }
         let actions = [defaultAction]
-        
-        print("RECEIVED")
         
         presentAlertControllerWithTitle(
             "Message Received",

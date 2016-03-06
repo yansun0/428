@@ -12,7 +12,7 @@ import WatchConnectivity
 
 class ViewController: UIViewController {
     
-    var groups:[Int:[String]] = [0:
+    var groups:[Int : AnyObject] = [0:
         ["The birch canoe slid on the smooth planks.",
         "Glue the sheet to the dark blue background.",
         "It's easy to tell the depth of a well.",
@@ -75,6 +75,8 @@ class ViewController: UIViewController {
         else if(segmentedControl.selectedSegmentIndex == 2) {
             self.index = 2
         }
+        
+        print(self.index)
     }
     
     
@@ -97,7 +99,7 @@ class ViewController: UIViewController {
             return
         }
         
-        let message = ["request": "showAlert"]
+        let message = ["request": self.groups[self.index]! as AnyObject]
         WCSession.defaultSession().sendMessage(
             message, replyHandler: { (replyMessage) -> Void in
                 //
