@@ -24,16 +24,36 @@
                                     <action selector="sendToWatchBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Vh-JC-9O7"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yYd-0f-C56">
+                                <rect key="frame" x="186" y="286" width="228" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="228" id="hnX-wV-0Rn"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                    <segment title="Third"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedControlAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="eue-LP-cwv"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="yYd-0f-C56" firstAttribute="centerX" secondItem="Hqj-f3-KKK" secondAttribute="centerX" id="Sqa-9d-HXO"/>
                             <constraint firstItem="Hqj-f3-KKK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gqT-MT-cjo"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Hqj-f3-KKK" secondAttribute="bottom" constant="187" id="jcz-nG-VpD"/>
+                            <constraint firstItem="yYd-0f-C56" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="rHy-um-geR"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="segmentedControl" destination="yYd-0f-C56" id="j9Q-pg-edR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="380" y="298"/>
         </scene>
     </scenes>
 </document>

@@ -11,7 +11,48 @@ import WatchConnectivity
 
 
 class ViewController: UIViewController {
+    
+    var groups:[Int:[String]] = [0:
+        ["The birch canoe slid on the smooth planks.",
+        "Glue the sheet to the dark blue background.",
+        "It's easy to tell the depth of a well.",
+        "These days a chicken leg is a rare dish.",
+        "Rice is often served in round bowls.",
+        "The juice of lemons makes fine punch.",
+        "The box was thrown beside the parked truck.",
+        "The hogs were fed chopped corn and garbage.",
+        "Four hours of steady work faced us. ",
+        "A large size in stockings is hard to sell."],
+        
+        1:
+        ["The birch canoe slid on the smooth planks.",
+        "Glue the sheet to the dark blue background.",
+        "It's easy to tell the depth of a well.",
+        "These days a chicken leg is a rare dish.",
+        "Rice is often served in round bowls.",
+        "The juice of lemons makes fine punch.",
+        "The box was thrown beside the parked truck.",
+        "The hogs were fed chopped corn and garbage.",
+        "Four hours of steady work faced us. ",
+        "A large size in stockings is hard to sell."],
+        
+        2:
+        ["The birch canoe slid on the smooth planks.",
+        "Glue the sheet to the dark blue background.",
+        "It's easy to tell the depth of a well.",
+        "These days a chicken leg is a rare dish.",
+        "Rice is often served in round bowls.",
+        "The juice of lemons makes fine punch.",
+        "The box was thrown beside the parked truck.",
+        "The hogs were fed chopped corn and garbage.",
+        "Four hours of steady work faced us. ",
+        "A large size in stockings is hard to sell."]
+    ]
+    
+    var index:Int = 0;
+    
 
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -24,10 +65,18 @@ class ViewController: UIViewController {
 
     
     
+    @IBAction func segmentedControlAction(sender: AnyObject) {
+        if(segmentedControl.selectedSegmentIndex == 0) {
+            self.index = 0
+        }
+        else if(segmentedControl.selectedSegmentIndex == 1) {
+            self.index = 1
+        }
+        else if(segmentedControl.selectedSegmentIndex == 2) {
+            self.index = 2
+        }
+    }
     
-    // Want to be able to select either group 1, 2, or 3
-    // Have a button that lets you click start new trial which sends the list and order to
-    // the apple watch
     
     @IBAction func sendToWatchBtnTapped(sender: UIButton!) {
         
