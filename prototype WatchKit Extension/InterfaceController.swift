@@ -8,9 +8,10 @@
 
 import WatchKit
 import Foundation
+import WatchConnectivity
 
 
-class InterfaceController : WKInterfaceController {
+class InterfaceController : WKInterfaceController, WCSessionDelegate {
     
     @IBOutlet var button: WKInterfaceButton!
     @IBOutlet var message: WKInterfaceLabel!
@@ -25,6 +26,13 @@ class InterfaceController : WKInterfaceController {
         
         // uncomment this when init trial from ios app is done
         // self.setButtonState( false, trial : nil, mode : nil )
+        
+        // Activate the session on both sides to enable communication.
+        if WCSession.isSupported() {
+            let session = WCSession.defaultSession()
+            session.delegate = self // conforms to WCSessionDelegate
+            session.activateSession()
+        }
 
         // for dev purposes only -- these stuff should be async set from ios ap
         // delete this when init trial from ios app is done
@@ -45,7 +53,29 @@ class InterfaceController : WKInterfaceController {
 
     
     override func didDeactivate() {
+        super.didDeactivate()
         self.didTrialRan = true
+    }
+    
+    
+//    // Received message from iPhone
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+        print(__FUNCTION__)
+        guard message["request"] as? String == "showAlert" else {return}
+        
+        let defaultAction = WKAlertAction(
+            title: "OK",
+            style: WKAlertActionStyle.Default) { () -> Void in
+        }
+        let actions = [defaultAction]
+        
+        print("RECEIVED")
+        
+        presentAlertControllerWithTitle(
+            "Message Received",
+            message: "",
+            preferredStyle: WKAlertControllerStyle.Alert,
+            actions: actions)
     }
     
 
@@ -156,5 +186,7 @@ class InterfaceController : WKInterfaceController {
         UIGraphicsEndImageContext()
         return result
     }
+    
+    
     
 }
