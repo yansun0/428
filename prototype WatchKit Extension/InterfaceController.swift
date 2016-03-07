@@ -20,19 +20,13 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
     var trialMode : TextMode? // trial constants should be sent from the ios app
     var trialData : [ String : AnyObject ] = [ String : AnyObject ]()
     var didTrialRan : Bool = false
+    var session : WCSession!
     
     override func awakeWithContext( context : AnyObject? ) {
         super.awakeWithContext( context )
         
         // uncomment this when init trial from ios app is done
         // self.setButtonState( false, trial : nil, mode : nil )
-        
-        // Activate the session on both sides to enable communication.
-        if WCSession.isSupported() {
-            let session = WCSession.defaultSession()
-            session.delegate = self // conforms to WCSessionDelegate
-            session.activateSession()
-        }
 
         // for dev purposes only -- these stuff should be async set from ios ap
         // delete this when init trial from ios app is done
@@ -45,6 +39,14 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
     
     override func willActivate() {
         super.willActivate()
+        
+        // Activate the session on both sides to enable communication.
+        if WCSession.isSupported() {
+            self.session = WCSession.defaultSession()
+            self.session.delegate = self
+            self.session.activateSession()
+        }
+        
         if self.didTrialRan {
             self.setButtonState( false, trial : nil, mode : nil )
             self.didTrialRan = false

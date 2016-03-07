@@ -10,9 +10,9 @@ import UIKit
 import WatchConnectivity
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, WCSessionDelegate {
     
-    var groups:[Int : AnyObject] = [0:
+    let groups:[Int : AnyObject] = [0:
         ["The birch canoe slid on the smooth planks.",
         "Glue the sheet to the dark blue background.",
         "It's easy to tell the depth of a well.",
@@ -51,12 +51,21 @@ class ViewController: UIViewController {
     
     var index:Int = 0;
     
-
+    var session: WCSession!
+    
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        if (WCSession.isSupported()) {
+            self.session = WCSession.defaultSession()
+            self.session.delegate = self;
+            self.session.activateSession()
+        }
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -83,7 +92,7 @@ class ViewController: UIViewController {
     @IBAction func sendToWatchBtnTapped(sender: UIButton!) {
         
         // Check the reachablity
-        if !WCSession.defaultSession().reachable {
+        if !self.session.reachable {
             
             let alert = UIAlertController(
                 title: "Failed to send",
@@ -100,8 +109,9 @@ class ViewController: UIViewController {
         }
         
         let message = ["request": self.groups[self.index]! as AnyObject]
-        WCSession.defaultSession().sendMessage(
-            message, replyHandler: { (replyMessage) -> Void in
+        self.session.sendMessage(
+            message,
+            replyHandler: { (replyMessage) -> Void in
                 //
             }) { (error) -> Void in
                 print(error)
