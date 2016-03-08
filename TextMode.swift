@@ -20,6 +20,8 @@ let MESSAGE_TRIAL_NUM = "num"
 let MESSAGE_TRIAL = "message"
 let MESSAGE_TRIAL_STARTED = "started"
 let MESSAGE_TRIAL_FINISHED = "finished"
+let TOTAL_NUM_TRIALS = 60
+let TRIALS_PER_MODE = 20
 
 enum TextMode {
     case Scroll

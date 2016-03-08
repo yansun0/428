@@ -44,12 +44,38 @@ class ViewController: UIViewController, WCSessionDelegate {
                 "Four hours of steady work faced us. ",
                 "A large size in stockings is hard to sell." ]
         ]
+    
+    let modes : [ Int : [ TextMode ] ] =
+    [ 0 : [ .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker,
+        .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker,
+        .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker,
+        .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker,
+        .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker,
+        .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker,
+        .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker],
+        1 : [ .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP,
+        .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP,
+        .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP,
+        .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP,
+        .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP,
+        .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP,
+        .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP],
+        2 : [ .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll,
+        .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll,
+        .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll,
+        .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll,
+        .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll,
+        .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll,
+        .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll]
+    ]
+    
     var group : Int = 0
     var mode : TextMode = TextMode.RSVP
     var trial : Int = -1
 
     var session: WCSession!
     
+    @IBOutlet var trialLabel: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var sendToWatchBtn: UIButton!
     
@@ -70,10 +96,14 @@ class ViewController: UIViewController, WCSessionDelegate {
     
     
     @IBAction func sendToWatchBtnTapped( sender : UIButton! ) {
+        self.sendMessageToWatch()
+    }
+    
+    func sendMessageToWatch() {
         // find the next trial params
         let text : String = self.groups[ group ]![ self.trial ]
         let message = [
-            MESSAGE_TRIAL_MODE : TextModeToString( self.mode ) as AnyObject,
+            MESSAGE_TRIAL_MODE : TextModeToString( self.modes [ group]![ self.trial] ) as AnyObject,
             MESSAGE_TRIAL_TEXT : text as AnyObject,
             MESSAGE_TRIAL_NUM : self.trial as AnyObject ]
         
@@ -89,7 +119,7 @@ class ViewController: UIViewController, WCSessionDelegate {
                 handler : nil)
             alert.addAction( okAction )
             presentViewController( alert, animated : true, completion : nil )
-
+            
         } else {
             self.session.sendMessage( message, replyHandler : nil, errorHandler: nil )
         }
@@ -107,10 +137,22 @@ class ViewController: UIViewController, WCSessionDelegate {
                     
                     // handle redo a trial here
                     
-                    // handle move onto to next trial here
-                    self.trial = self.trial + 1
+                    let refreshAlert = UIAlertController(title: "Refresh", message: "All data will be lost.", preferredStyle: UIAlertControllerStyle.Alert)
                     
-                    // handle trial completion here
+                    refreshAlert.addAction(UIAlertAction(title: "Restart Trial", style: .Default, handler: { (action: UIAlertAction!) in
+                        // Send message
+                        self.sendMessageToWatch()
+                    }))
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "Next Trial", style: .Default, handler: { (action: UIAlertAction!) in
+                        self.trial = self.trial + 1
+                        
+                        // Send message
+                        self.sendMessageToWatch()
+                    }))
+                    
+                    presentViewController(refreshAlert, animated: true, completion: nil)
+                    
                 }
             }
     }
