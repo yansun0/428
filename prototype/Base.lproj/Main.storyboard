@@ -48,10 +48,19 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zMA-ca-P2c">
+                                <rect key="frame" x="259" y="454" width="82" height="30"/>
+                                <state key="normal" title="Reset study"/>
+                                <connections>
+                                    <action selector="resetStudyAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VI5-am-dBC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="8Vc-xr-GhX" firstAttribute="centerX" secondItem="Hqj-f3-KKK" secondAttribute="centerX" id="30Z-R7-Evh"/>
+                            <constraint firstItem="zMA-ca-P2c" firstAttribute="centerX" secondItem="Hqj-f3-KKK" secondAttribute="centerX" id="Ded-gM-pxm"/>
+                            <constraint firstItem="zMA-ca-P2c" firstAttribute="top" secondItem="Hqj-f3-KKK" secondAttribute="bottom" constant="35" id="HAu-Bd-McK"/>
                             <constraint firstItem="yYd-0f-C56" firstAttribute="centerX" secondItem="Hqj-f3-KKK" secondAttribute="centerX" id="Sqa-9d-HXO"/>
                             <constraint firstItem="Hqj-f3-KKK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gqT-MT-cjo"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Hqj-f3-KKK" secondAttribute="bottom" constant="181" id="jcz-nG-VpD"/>
@@ -60,6 +69,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="resetStudyButton" destination="zMA-ca-P2c" id="4DG-2J-5xj"/>
                         <outlet property="segmentedControl" destination="yYd-0f-C56" id="j9Q-pg-edR"/>
                         <outlet property="sendToWatchBtn" destination="Hqj-f3-KKK" id="Adp-J7-KAH"/>
                         <outlet property="trialLabel" destination="8bC-Xf-vdC" id="E9w-RO-ugp"/>

@@ -71,13 +71,14 @@ class ViewController: UIViewController, WCSessionDelegate {
     
     var group : Int = 0
     var mode : TextMode = TextMode.RSVP
-    var trial : Int = -1
+    var trial : Int = 0
 
     var session: WCSession!
     
     @IBOutlet var trialLabel: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var sendToWatchBtn: UIButton!
+    @IBOutlet weak var resetStudyButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,8 +96,19 @@ class ViewController: UIViewController, WCSessionDelegate {
     }
     
     
+    @IBAction func resetStudyAction(sender: AnyObject) {
+        self.resetStudy()
+    }
+    
+    func resetStudy() {
+        // Reset study
+        self.trial = 0
+        self.sendToWatchBtn.enabled = true
+    }
+    
     @IBAction func sendToWatchBtnTapped( sender : UIButton! ) {
         self.sendMessageToWatch()
+        self.sendToWatchBtn.enabled = false
     }
     
     func sendMessageToWatch() {
@@ -136,6 +148,11 @@ class ViewController: UIViewController, WCSessionDelegate {
                     self.sendToWatchBtn.enabled = true
                     
                     // handle redo a trial here
+                    var nextTrialTitle:String = "Next Trial"
+                    
+                    if (self.trial < TOTAL_NUM_TRIALS - 1) {
+                        nextTrialTitle = "End Study"
+                    }
                     
                     let refreshAlert = UIAlertController(title: "Refresh", message: "All data will be lost.", preferredStyle: UIAlertControllerStyle.Alert)
                     
@@ -144,11 +161,22 @@ class ViewController: UIViewController, WCSessionDelegate {
                         self.sendMessageToWatch()
                     }))
                     
-                    refreshAlert.addAction(UIAlertAction(title: "Next Trial", style: .Default, handler: { (action: UIAlertAction!) in
-                        self.trial = self.trial + 1
-                        
+                    refreshAlert.addAction(UIAlertAction(title: "Reset Study", style: .Default, handler: { (action: UIAlertAction!) in
                         // Send message
-                        self.sendMessageToWatch()
+                        self.resetStudy()
+                    }))
+                    
+                    refreshAlert.addAction(UIAlertAction(title: nextTrialTitle, style: .Default, handler: { (action: UIAlertAction!) in
+                        
+                        if (self.trial < TOTAL_NUM_TRIALS - 1) {
+                            self.trial = self.trial + 1
+                        
+                            // Send message
+                            self.sendMessageToWatch()
+                        } else {
+                            // Reset study
+                            self.resetStudy()
+                        }
                     }))
                     
                     presentViewController(refreshAlert, animated: true, completion: nil)
