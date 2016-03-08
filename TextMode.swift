@@ -12,7 +12,14 @@ import UIKit
 import WatchKit
 #endif
 
-let TRIAL_TIME : Int = 5
+let TRIAL_TIME : Int = 10
+let IS_DEV : Bool = true
+let MESSAGE_TRIAL_TEXT = "text"
+let MESSAGE_TRIAL_MODE = "mode"
+let MESSAGE_TRIAL_NUM = "num"
+let MESSAGE_TRIAL = "message"
+let MESSAGE_TRIAL_STARTED = "started"
+let MESSAGE_TRIAL_FINISHED = "finished"
 
 enum TextMode {
     case Scroll
@@ -62,5 +69,19 @@ enum TextMode {
             NSForegroundColorAttributeName : UIColor.whiteColor(),
             NSBackgroundColorAttributeName : UIColor.blackColor()
         ]
+    }
+}
+
+
+func TextModeToString( mode : TextMode ) -> String {
+    return mode.description
+}
+
+
+func StringToTextMode( descript : String ) -> TextMode {
+    switch descript {
+        case TextMode.Ticker.description : return TextMode.Ticker
+        case TextMode.RSVP.description : return TextMode.RSVP
+        default : return TextMode.Scroll
     }
 }

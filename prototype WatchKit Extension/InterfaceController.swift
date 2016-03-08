@@ -30,10 +30,13 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
 
         // for dev purposes only -- these stuff should be async set from ios ap
         // delete this when init trial from ios app is done
-        let devMode = TextMode.RSVP
-        let devStr : String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed eleifend diam, at tincidunt augue. Duis tincidunt dui ut accumsan facilisis. Nunc sit amet diam suscipit, commodo mauris eu, commodo end."
-        let devTrialNum = 5
-        self.setupTrial( devMode, trialText: devStr, trialNum: devTrialNum )
+        
+        if IS_DEV {
+            let devMode = TextMode.RSVP
+            let devStr : String = "Today I Learned that the Higgs boson, commonly refered to as the God Particle, was originally intended to be name the goddamn particle, but Leon Lederman's publisher asked that it be changed."
+            let devTrialNum = 5
+            self.setupTrial( devMode, trialText: devStr, trialNum: devTrialNum )
+        }
     }
     
     
@@ -50,6 +53,9 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
         if self.didTrialRan {
             self.setButtonState( false, trial : nil, mode : nil )
             self.didTrialRan = false
+            self.session.sendMessage(
+                [ MESSAGE_TRIAL : MESSAGE_TRIAL_FINISHED as AnyObject ],
+                replyHandler : nil, errorHandler : nil )
         }
     }
 
@@ -61,32 +67,24 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
     
     
     // Received message from iPhone
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
-        print(__FUNCTION__)
-        //guard message["request"] as? String == "showAlert" else {return}
-        
-        let groupString:[String] = message["request"] as! [String]
-        
-        // @YAN: THE GROUPSTRING ARRAY CONTAINS ALL THE STRINGS IN THE CORRECT ORDER.
-        // I GUESS 1 STRING PER TRIAL.
-        
-        let defaultAction = WKAlertAction(
-            title: "OK",
-            style: WKAlertActionStyle.Default) { () -> Void in
+    func session( session : WCSession,
+                  didReceiveMessage message : [ String : AnyObject ],
+                  replyHandler : ( [ String : AnyObject ] ) -> Void ) {
+
+        if let text = message[ MESSAGE_TRIAL_TEXT ] as? String,
+               mode = message[ MESSAGE_TRIAL_MODE ] as? String,
+               num = message[ MESSAGE_TRIAL_NUM ] as? Int {
+            self.setupTrial( StringToTextMode( mode ), trialText : text, trialNum: num )
         }
-        let actions = [defaultAction]
-        
-        presentAlertControllerWithTitle(
-            "Message Received",
-            message: "",
-            preferredStyle: WKAlertControllerStyle.Alert,
-            actions: actions)
     }
     
 
     @IBAction func StartButton() {
         if let mode = self.trialMode {
             pushControllerWithName( mode.controllerName, context : self.trialData )
+            self.session.sendMessage(
+                [ MESSAGE_TRIAL : MESSAGE_TRIAL_STARTED as AnyObject ],
+                replyHandler : nil, errorHandler : nil )
             self.didTrialRan = true
         }
     }
