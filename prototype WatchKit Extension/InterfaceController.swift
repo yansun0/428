@@ -20,42 +20,41 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
     var trialMode : TextMode? // trial constants should be sent from the ios app
     var trialData : [ String : AnyObject ] = [ String : AnyObject ]()
     var didTrialRan : Bool = false
-    var session : WCSession!
+    
     
     override func awakeWithContext( context : AnyObject? ) {
         super.awakeWithContext( context )
         
-        // uncomment this when init trial from ios app is done
-        // self.setButtonState( false, trial : nil, mode : nil )
-
-        // for dev purposes only -- these stuff should be async set from ios ap
-        // delete this when init trial from ios app is done
+        if WCSession.isSupported() {
+            let session = WCSession.defaultSession()
+            session.delegate = self
+            session.activateSession()
+        }
         
+        // for dev purposes only -- these stuff should be async set from ios ap
         if IS_DEV {
-            let devMode = TextMode.RSVP
+            let devMode = TextMode.Ticker
             let devStr : String = "Today I Learned that the Higgs boson, commonly refered to as the God Particle, was originally intended to be name the goddamn particle, but Leon Lederman's publisher asked that it be changed."
             let devTrialNum = 5
             self.setupTrial( devMode, trialText: devStr, trialNum: devTrialNum )
+        
+        } else {
+            self.setButtonState( false, trial : nil, mode : nil )
         }
     }
     
     
     override func willActivate() {
         super.willActivate()
-        
-        // Activate the session on both sides to enable communication.
-        if WCSession.isSupported() {
-            self.session = WCSession.defaultSession()
-            self.session.delegate = self
-            self.session.activateSession()
-        }
-        
         if self.didTrialRan {
             self.setButtonState( false, trial : nil, mode : nil )
             self.didTrialRan = false
-            self.session.sendMessage(
-                [ MESSAGE_TRIAL : MESSAGE_TRIAL_FINISHED as AnyObject ],
-                replyHandler : nil, errorHandler : nil )
+            let session = WCSession.defaultSession()
+            let message = [ MESSAGE_TRIAL_STATE : MESSAGE_TRIAL_STATE_FINISHED as AnyObject ]
+            do {
+                try session.updateApplicationContext( message )
+            } catch {
+            }
         }
     }
 
@@ -64,13 +63,23 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
         super.didDeactivate()
         self.didTrialRan = true
     }
-    
+
     
     // Received message from iPhone
+    func session( session: WCSession,
+                  didReceiveApplicationContext message: [String : AnyObject]) {
+        print(__FUNCTION__)
+        if let text = message[ MESSAGE_TRIAL_TEXT ] as? String,
+            mode = message[ MESSAGE_TRIAL_MODE ] as? String,
+            num = message[ MESSAGE_TRIAL_NUM ] as? Int {
+                self.setupTrial( StringToTextMode( mode ), trialText : text, trialNum: num + 1 )
+        }
+    }
+
     func session( session : WCSession,
                   didReceiveMessage message : [ String : AnyObject ],
                   replyHandler : ( [ String : AnyObject ] ) -> Void ) {
-
+        print(__FUNCTION__)
         if let text = message[ MESSAGE_TRIAL_TEXT ] as? String,
                mode = message[ MESSAGE_TRIAL_MODE ] as? String,
                num = message[ MESSAGE_TRIAL_NUM ] as? Int {
@@ -82,9 +91,12 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
     @IBAction func StartButton() {
         if let mode = self.trialMode {
             pushControllerWithName( mode.controllerName, context : self.trialData )
-            self.session.sendMessage(
-                [ MESSAGE_TRIAL : MESSAGE_TRIAL_STARTED as AnyObject ],
-                replyHandler : nil, errorHandler : nil )
+            let session = WCSession.defaultSession()
+            let message = [ MESSAGE_TRIAL_STATE : MESSAGE_TRIAL_STATE_STARTED as AnyObject ]
+            do {
+                try session.updateApplicationContext( message )
+            } catch {
+            }
             self.didTrialRan = true
         }
     }

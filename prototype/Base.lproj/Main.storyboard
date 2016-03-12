@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hqj-f3-KKK">
-                                <rect key="frame" x="206" y="389" width="189" height="30"/>
+                                <rect key="frame" x="206" y="434" width="189" height="30"/>
                                 <state key="normal" title="Start study on Apple Watch"/>
                                 <connections>
                                     <action selector="sendToWatchBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Vh-JC-9O7"/>
@@ -27,7 +27,7 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yYd-0f-C56">
                                 <rect key="frame" x="186" y="114" width="228" height="29"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="228" id="hnX-wV-0Rn"/>
+                                    <constraint firstAttribute="width" constant="228" id="rm8-q9-QAU"/>
                                 </constraints>
                                 <segments>
                                     <segment title="First"/>
@@ -38,18 +38,8 @@
                                     <action selector="segmentedControlAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="eue-LP-cwv"/>
                                 </connections>
                             </segmentedControl>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trial X of X" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Vc-xr-GhX">
-                                <rect key="frame" x="258" y="289" width="84" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="3Me-8M-e5Y"/>
-                                    <constraint firstAttribute="width" constant="84" id="eFW-bs-QQM"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zMA-ca-P2c">
-                                <rect key="frame" x="259" y="454" width="82" height="30"/>
+                                <rect key="frame" x="259" y="499" width="82" height="30"/>
                                 <state key="normal" title="Reset study"/>
                                 <connections>
                                     <action selector="resetStudyAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VI5-am-dBC"/>
@@ -58,21 +48,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="8Vc-xr-GhX" firstAttribute="centerX" secondItem="Hqj-f3-KKK" secondAttribute="centerX" id="30Z-R7-Evh"/>
-                            <constraint firstItem="zMA-ca-P2c" firstAttribute="centerX" secondItem="Hqj-f3-KKK" secondAttribute="centerX" id="Ded-gM-pxm"/>
-                            <constraint firstItem="zMA-ca-P2c" firstAttribute="top" secondItem="Hqj-f3-KKK" secondAttribute="bottom" constant="35" id="HAu-Bd-McK"/>
-                            <constraint firstItem="yYd-0f-C56" firstAttribute="centerX" secondItem="Hqj-f3-KKK" secondAttribute="centerX" id="Sqa-9d-HXO"/>
-                            <constraint firstItem="Hqj-f3-KKK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gqT-MT-cjo"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Hqj-f3-KKK" secondAttribute="bottom" constant="181" id="jcz-nG-VpD"/>
-                            <constraint firstItem="8Vc-xr-GhX" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="mKN-67-yVI"/>
-                            <constraint firstItem="yYd-0f-C56" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-172" id="rHy-um-geR"/>
+                            <constraint firstItem="zMA-ca-P2c" firstAttribute="centerX" secondItem="Hqj-f3-KKK" secondAttribute="centerX" id="1o7-3k-mGD"/>
+                            <constraint firstItem="zMA-ca-P2c" firstAttribute="top" secondItem="Hqj-f3-KKK" secondAttribute="bottom" constant="35" id="7WG-sG-P9y"/>
+                            <constraint firstItem="yYd-0f-C56" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="94" id="Mhq-FO-QK9"/>
+                            <constraint firstItem="yYd-0f-C56" firstAttribute="centerX" secondItem="Hqj-f3-KKK" secondAttribute="centerX" id="NH0-OW-WfB"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zMA-ca-P2c" secondAttribute="bottom" constant="71" id="Uxs-8b-QXs"/>
+                            <constraint firstItem="yYd-0f-C56" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vGQ-nI-vAD"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="resetStudyButton" destination="zMA-ca-P2c" id="4DG-2J-5xj"/>
                         <outlet property="segmentedControl" destination="yYd-0f-C56" id="j9Q-pg-edR"/>
                         <outlet property="sendToWatchBtn" destination="Hqj-f3-KKK" id="Adp-J7-KAH"/>
-                        <outlet property="trialLabel" destination="8bC-Xf-vdC" id="E9w-RO-ugp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

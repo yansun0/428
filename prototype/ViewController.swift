@@ -12,81 +12,23 @@ import WatchConnectivity
 
 class ViewController: UIViewController, WCSessionDelegate {
     
-    let groups : [ Int : [ String ] ] =
-        [ 0 : [ "The birch canoe slid on the smooth planks.",
-                "Glue the sheet to the dark blue background.",
-                "It's easy to tell the depth of a well.",
-                "These days a chicken leg is a rare dish.",
-                "Rice is often served in round bowls.",
-                "The juice of lemons makes fine punch.",
-                "The box was thrown beside the parked truck.",
-                "The hogs were fed chopped corn and garbage.",
-                "Four hours of steady work faced us. ",
-                "A large size in stockings is hard to sell." ],
-          1 : [ "The birch canoe slid on the smooth planks.",
-                "Glue the sheet to the dark blue background.",
-                "It's easy to tell the depth of a well.",
-                "These days a chicken leg is a rare dish.",
-                "Rice is often served in round bowls.",
-                "The juice of lemons makes fine punch.",
-                "The box was thrown beside the parked truck.",
-                "The hogs were fed chopped corn and garbage.",
-                "Four hours of steady work faced us. ",
-                "A large size in stockings is hard to sell." ],
-          2 : [ "The birch canoe slid on the smooth planks.",
-                "Glue the sheet to the dark blue background.",
-                "It's easy to tell the depth of a well.",
-                "These days a chicken leg is a rare dish.",
-                "Rice is often served in round bowls.",
-                "The juice of lemons makes fine punch.",
-                "The box was thrown beside the parked truck.",
-                "The hogs were fed chopped corn and garbage.",
-                "Four hours of steady work faced us. ",
-                "A large size in stockings is hard to sell." ]
-        ]
-    
-    let modes : [ Int : [ TextMode ] ] =
-    [ 0 : [ .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker,
-        .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker,
-        .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker,
-        .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker,
-        .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker,
-        .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker,
-        .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker],
-        1 : [ .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP,
-        .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP,
-        .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP,
-        .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP,
-        .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP,
-        .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP,
-        .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP],
-        2 : [ .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll,
-        .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll,
-        .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll,
-        .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll,
-        .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll,
-        .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll,
-        .Ticker, .RSVP, .Scroll, .Ticker, .RSVP, .Scroll]
-    ]
-    
     var group : Int = 0
     var mode : TextMode = TextMode.RSVP
     var trial : Int = 0
-
-    var session: WCSession!
     
-    @IBOutlet var trialLabel: UIView!
+    
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var sendToWatchBtn: UIButton!
     @IBOutlet weak var resetStudyButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if (WCSession.isSupported()) {
-            self.session = WCSession.defaultSession()
-            self.session.delegate = self;
-            self.session.activateSession()
+            let session = WCSession.defaultSession()
+            session.delegate = self;
+            session.activateSession()
         }
     }
     
@@ -100,27 +42,33 @@ class ViewController: UIViewController, WCSessionDelegate {
         self.resetStudy()
     }
     
+    
     func resetStudy() {
-        // Reset study
         self.trial = 0
         self.sendToWatchBtn.enabled = true
     }
+    
     
     @IBAction func sendToWatchBtnTapped( sender : UIButton! ) {
         self.sendMessageToWatch()
         self.sendToWatchBtn.enabled = false
     }
     
+
     func sendMessageToWatch() {
         // find the next trial params
-        let text : String = self.groups[ group ]![ self.trial ]
+        
+        let text : String = TRIAL_GROUP_TEXTS[ group ]![ self.trial ]
         let message = [
-            MESSAGE_TRIAL_MODE : TextModeToString( self.modes [ group]![ self.trial] ) as AnyObject,
+            MESSAGE_TRIAL_MODE : TextModeToString( TRIAL_GROUP_MODES [ group ]![ self.trial ] ) as AnyObject,
             MESSAGE_TRIAL_TEXT : text as AnyObject,
             MESSAGE_TRIAL_NUM : self.trial as AnyObject ]
         
         // Check the reachablity
-        if !self.session.reachable {
+        let session = WCSession.defaultSession()
+        do {
+            try session.updateApplicationContext( message )
+        } catch {
             let alert = UIAlertController(
                 title : "Failed to send",
                 message : "Apple Watch is not reachable.",
@@ -131,59 +79,52 @@ class ViewController: UIViewController, WCSessionDelegate {
                 handler : nil)
             alert.addAction( okAction )
             presentViewController( alert, animated : true, completion : nil )
-            
-        } else {
-            self.session.sendMessage( message, replyHandler : nil, errorHandler: nil )
         }
     }
     
     
     func session( session : WCSession,
-        didReceiveMessage message : [ String : AnyObject ],
-        replyHandler : ( [ String : AnyObject ] ) -> Void ) {
-            if let msg = message[ MESSAGE_TRIAL ] as? String {
-                if ( msg == MESSAGE_TRIAL_STARTED ) {
-                    self.sendToWatchBtn.enabled = false
-                } else if ( msg == MESSAGE_TRIAL_FINISHED ) {
-                    self.sendToWatchBtn.enabled = true
-                    
-                    // handle redo a trial here
-                    var nextTrialTitle:String = "Next Trial"
-                    
-                    if (self.trial < TOTAL_NUM_TRIALS - 1) {
-                        nextTrialTitle = "End Study"
-                    }
-                    
-                    let refreshAlert = UIAlertController(title: "Refresh", message: "All data will be lost.", preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "Restart Trial", style: .Default, handler: { (action: UIAlertAction!) in
-                        // Send message
-                        self.sendMessageToWatch()
-                    }))
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "Reset Study", style: .Default, handler: { (action: UIAlertAction!) in
-                        // Send message
-                        self.resetStudy()
-                    }))
-                    
-                    refreshAlert.addAction(UIAlertAction(title: nextTrialTitle, style: .Default, handler: { (action: UIAlertAction!) in
-                        
-                        if (self.trial < TOTAL_NUM_TRIALS - 1) {
-                            self.trial = self.trial + 1
-                        
-                            // Send message
-                            self.sendMessageToWatch()
+                  didReceiveApplicationContext message : [ String : AnyObject ] ) {
+
+        if let msg = message[ MESSAGE_TRIAL_STATE ] as? String {
+            if ( msg == MESSAGE_TRIAL_STATE_STARTED ) {
+                self.sendToWatchBtn.enabled = false
+                
+            } else if ( msg == MESSAGE_TRIAL_STATE_FINISHED ) {
+                self.sendToWatchBtn.enabled = true
+                
+                let refreshAlert = UIAlertController(
+                    title : "Complete",
+                    message : String( format: "User compeleted trial %d of %d", self.trial + 1, TRIALS_PER_GROUP ),
+                    preferredStyle : UIAlertControllerStyle.Alert )
+
+                let alertActionNext = UIAlertAction(
+                    title : ( ( self.trial < TRIALS_PER_GROUP ) ? "Next Trial" : "End Study" ),
+                    style: .Default,
+                    handler: { ( action: UIAlertAction! ) in
+                        self.trial = self.trial + 1
+                        if (self.trial < TRIALS_PER_GROUP) {
+                            self.sendMessageToWatch() // next trial
                         } else {
-                            // Reset study
-                            self.resetStudy()
+                            self.resetStudy()         // trials done
                         }
-                    }))
-                    
-                    presentViewController(refreshAlert, animated: true, completion: nil)
-                    
-                }
+                } )
+                refreshAlert.addAction(alertActionNext)
+
+                let alertActionRedo = UIAlertAction(
+                    title : "Redo Trial",
+                    style: .Default,
+                    handler: { ( action: UIAlertAction! ) in
+                        self.sendMessageToWatch()
+                } )
+                refreshAlert.addAction(alertActionRedo)
+                
+                presentViewController(refreshAlert, animated: true, completion: nil)
             }
+        }
+    
     }
+
     
 }
 
