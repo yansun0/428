@@ -18,6 +18,7 @@ class ViewController: UIViewController, WCSessionDelegate {
     
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var testRunSelector: UISegmentedControl!
     @IBOutlet weak var sendToWatchBtn: UIButton!
     @IBOutlet weak var resetStudyButton: UIButton!
     
@@ -33,12 +34,22 @@ class ViewController: UIViewController, WCSessionDelegate {
     }
     
     
-    @IBAction func segmentedControlAction(sender: AnyObject) {
-        self.group = segmentedControl.selectedSegmentIndex
+    @IBAction func sendTestToWatchBtnTapped(sender: AnyObject) {
+        let mode : TextMode = ( self.testRunSelector.selectedSegmentIndex == 0 ) ?
+                                TextMode.Scroll :
+                                ( ( self.testRunSelector.selectedSegmentIndex == 1 ) ?
+                                    TextMode.RSVP : TextMode.Ticker )
+        let msg = getTestMessageForWatch( mode )
+        self.sendMessageToWatch( msg )
     }
     
     
-    @IBAction func resetStudyAction(sender: AnyObject) {
+    @IBAction func segmentedControlAction( sender: AnyObject ) {
+        self.group = self.segmentedControl.selectedSegmentIndex
+    }
+    
+    
+    @IBAction func resetStudyAction( sender: AnyObject ) {
         self.resetStudy()
     }
     
@@ -46,40 +57,58 @@ class ViewController: UIViewController, WCSessionDelegate {
     func resetStudy() {
         self.trial = 0
         self.sendToWatchBtn.enabled = true
-        self.sendMessageToWatch( true )
+        let msg = self.getMessageForWatch( self.group, trialNum: self.trial, isCancel: true )
+        self.sendMessageToWatch( msg )
     }
     
     
     @IBAction func sendToWatchBtnTapped( sender : UIButton! ) {
-        self.sendMessageToWatch( false )
+        let msg = self.getMessageForWatch( self.group, trialNum: self.trial, isCancel: false )
+        self.sendMessageToWatch( msg )
         self.sendToWatchBtn.enabled = false
     }
     
-
-    func sendMessageToWatch( isCancel : Bool ) {
-        // find the next trial params
-        
-        let text : String = TRIAL_GROUP_TEXTS[ group ]![ self.trial ]
-        
-        // Calculate time
+    
+    func getTimeForText( text : String, mode : TextMode ) -> Float {
+        let WPM : Float = 200.0
         let numOfWords : Float = Float(text.componentsSeparatedByString(" ").count)
         let numOfChars : Float = Float(text.characters.count)
-        let durationForWords : Float = 250.0 / (60.0 * numOfWords)
-        let durationForChars : Float = (250.0 * 5) / (60.0 * numOfChars)
-        let totalDuration : Float = ((durationForChars + durationForWords) / 2.0) - ( TRIAL_GROUP_MODES [ group ]![ self.trial ] == TextMode.Scroll ? 0.0 : 0.5 )
-        
-        
-        let message = isCancel ?
+        let durationForWords : Float = ( numOfWords * 60.0 ) / WPM
+        let durationForChars : Float = ( 60.0 * numOfChars ) / (WPM * 5)
+        return ((durationForChars + durationForWords) / 2.0) - ( mode == TextMode.Scroll ? 0.0 : 0.5 )
+    }
+    
+    
+    func getTestMessageForWatch( mode : TextMode ) -> [ String : AnyObject ] {
+        return[ MESSAGE_TRIAL_MODE : TextModeToString( mode ) as AnyObject,
+                MESSAGE_TRIAL_TEXT : TEST_RUN_TEXT as AnyObject,
+                MESSAGE_TRIAL_DURATION : getTimeForText( TEST_RUN_TEXT, mode : mode ) as AnyObject,
+                MESSAGE_TRIAL_TEST_RUN : true as AnyObject,
+                MESSAGE_TRIAL_NUM : 0 as AnyObject ]
+    }
+    
+    
+    func getMessageForWatch( groupNum : Int,
+                             trialNum : Int,
+                             isCancel : Bool ) -> [ String : AnyObject ] {
+        let text : String = TRIAL_GROUP_TEXTS[ self.group ]![ self.trial ]
+        let mode : TextMode = TRIAL_GROUP_MODES[ self.group ]![ self.trial ]
+        let message : [ String : AnyObject ] = isCancel ?
             [ MESSAGE_TRIAL_STATE : MESSAGE_TRIAL_STATE_CANCEL as AnyObject ] :
-            [ MESSAGE_TRIAL_MODE : TextModeToString( TRIAL_GROUP_MODES [ group ]![ self.trial ] ) as AnyObject,
+            [ MESSAGE_TRIAL_MODE : TextModeToString( mode ) as AnyObject,
               MESSAGE_TRIAL_TEXT : text as AnyObject,
-                MESSAGE_TRIAL_NUM : self.trial as AnyObject,
-                MESSAGE_TRIAL_DURATION : totalDuration as AnyObject]
-        
+              MESSAGE_TRIAL_DURATION : getTimeForText( text, mode : mode ) as AnyObject,
+              MESSAGE_TRIAL_TEST_RUN : false as AnyObject,
+              MESSAGE_TRIAL_NUM : self.trial as AnyObject ]
+        return message
+    }
+    
+
+    func sendMessageToWatch( message : [ String : AnyObject ] ) {
         // Check the reachablity
         let session = WCSession.defaultSession()
         do {
-            try session.updateApplicationContext( message as! [String : AnyObject] )
+            try session.updateApplicationContext( message )
         } catch {
             let alert = UIAlertController(
                 title : "Failed to send",
@@ -116,7 +145,8 @@ class ViewController: UIViewController, WCSessionDelegate {
                     handler: { ( action: UIAlertAction! ) in
                         self.trial = self.trial + 1
                         if (self.trial < TRIALS_PER_GROUP) {
-                            self.sendMessageToWatch( false ) // next trial
+                            let msg = self.getMessageForWatch( self.group, trialNum: self.trial, isCancel: false )
+                            self.sendMessageToWatch( msg )
                         } else {
                             self.resetStudy()         // trials done
                         }
@@ -127,7 +157,8 @@ class ViewController: UIViewController, WCSessionDelegate {
                     title : "Redo Trial",
                     style: .Default,
                     handler: { ( action: UIAlertAction! ) in
-                        self.sendMessageToWatch( false )
+                        let msg = self.getMessageForWatch( self.group, trialNum: self.trial, isCancel: false )
+                        self.sendMessageToWatch( msg )
                 } )
                 refreshAlert.addAction(alertActionRedo)
                 
@@ -135,7 +166,8 @@ class ViewController: UIViewController, WCSessionDelegate {
                     title : "Cancel",
                     style: .Cancel,
                     handler: { ( action: UIAlertAction! ) in
-                        self.sendMessageToWatch( true )
+                        let msg = self.getMessageForWatch( self.group, trialNum: self.trial, isCancel: true )
+                        self.sendMessageToWatch( msg )
                 } )
                 refreshAlert.addAction(alertActionCancel)
                 
