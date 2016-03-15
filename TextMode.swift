@@ -14,6 +14,7 @@ import WatchKit
 
 let IS_DEV : Bool = false
 let TRIAL_TIME : Int = 10
+let MESSAGE_TRIAL_DURATION = 10.0
 let MESSAGE_TRIAL_TEXT = "text"
 let MESSAGE_TRIAL_MODE = "mode"
 let MESSAGE_TRIAL_NUM = "num"

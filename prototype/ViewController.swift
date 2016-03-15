@@ -60,16 +60,26 @@ class ViewController: UIViewController, WCSessionDelegate {
         // find the next trial params
         
         let text : String = TRIAL_GROUP_TEXTS[ group ]![ self.trial ]
+        
+        // Calculate time
+        let numOfWords : Float = Float(text.componentsSeparatedByString(" ").count)
+        let numOfChars : Float = Float(text.characters.count)
+        let durationForWords : Float = 250.0 / (60.0 * numOfWords)
+        let durationForChars : Float = (250.0 * 5) / (60.0 * numOfChars)
+        let totalDuration : Float = ((durationForChars + durationForWords) / 2.0) - ( TRIAL_GROUP_MODES [ group ]![ self.trial ] == TextMode.Scroll ? 0.0 : 0.5 )
+        
+        
         let message = isCancel ?
             [ MESSAGE_TRIAL_STATE : MESSAGE_TRIAL_STATE_CANCEL as AnyObject ] :
             [ MESSAGE_TRIAL_MODE : TextModeToString( TRIAL_GROUP_MODES [ group ]![ self.trial ] ) as AnyObject,
               MESSAGE_TRIAL_TEXT : text as AnyObject,
-              MESSAGE_TRIAL_NUM : self.trial as AnyObject ]
+                MESSAGE_TRIAL_NUM : self.trial as AnyObject,
+                MESSAGE_TRIAL_DURATION : totalDuration as AnyObject]
         
         // Check the reachablity
         let session = WCSession.defaultSession()
         do {
-            try session.updateApplicationContext( message )
+            try session.updateApplicationContext( message as! [String : AnyObject] )
         } catch {
             let alert = UIAlertController(
                 title : "Failed to send",
