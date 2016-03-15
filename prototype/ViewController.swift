@@ -46,23 +46,25 @@ class ViewController: UIViewController, WCSessionDelegate {
     func resetStudy() {
         self.trial = 0
         self.sendToWatchBtn.enabled = true
+        self.sendMessageToWatch( true )
     }
     
     
     @IBAction func sendToWatchBtnTapped( sender : UIButton! ) {
-        self.sendMessageToWatch()
+        self.sendMessageToWatch( false )
         self.sendToWatchBtn.enabled = false
     }
     
 
-    func sendMessageToWatch() {
+    func sendMessageToWatch( isCancel : Bool ) {
         // find the next trial params
         
         let text : String = TRIAL_GROUP_TEXTS[ group ]![ self.trial ]
-        let message = [
-            MESSAGE_TRIAL_MODE : TextModeToString( TRIAL_GROUP_MODES [ group ]![ self.trial ] ) as AnyObject,
-            MESSAGE_TRIAL_TEXT : text as AnyObject,
-            MESSAGE_TRIAL_NUM : self.trial as AnyObject ]
+        let message = isCancel ?
+            [ MESSAGE_TRIAL_STATE : MESSAGE_TRIAL_STATE_CANCEL as AnyObject ] :
+            [ MESSAGE_TRIAL_MODE : TextModeToString( TRIAL_GROUP_MODES [ group ]![ self.trial ] ) as AnyObject,
+              MESSAGE_TRIAL_TEXT : text as AnyObject,
+              MESSAGE_TRIAL_NUM : self.trial as AnyObject ]
         
         // Check the reachablity
         let session = WCSession.defaultSession()
@@ -104,20 +106,28 @@ class ViewController: UIViewController, WCSessionDelegate {
                     handler: { ( action: UIAlertAction! ) in
                         self.trial = self.trial + 1
                         if (self.trial < TRIALS_PER_GROUP) {
-                            self.sendMessageToWatch() // next trial
+                            self.sendMessageToWatch( false ) // next trial
                         } else {
                             self.resetStudy()         // trials done
                         }
                 } )
                 refreshAlert.addAction(alertActionNext)
-
+                
                 let alertActionRedo = UIAlertAction(
                     title : "Redo Trial",
                     style: .Default,
                     handler: { ( action: UIAlertAction! ) in
-                        self.sendMessageToWatch()
+                        self.sendMessageToWatch( false )
                 } )
                 refreshAlert.addAction(alertActionRedo)
+                
+                let alertActionCancel = UIAlertAction(
+                    title : "Cancel",
+                    style: .Cancel,
+                    handler: { ( action: UIAlertAction! ) in
+                        self.sendMessageToWatch( true )
+                } )
+                refreshAlert.addAction(alertActionCancel)
                 
                 presentViewController(refreshAlert, animated: true, completion: nil)
             }

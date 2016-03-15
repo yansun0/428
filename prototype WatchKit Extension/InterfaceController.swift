@@ -59,20 +59,16 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
     }
 
     
-    override func didDeactivate() {
-        super.didDeactivate()
-        self.didTrialRan = true
-    }
-
-    
     // Received message from iPhone
     func session( session: WCSession,
                   didReceiveApplicationContext message: [String : AnyObject]) {
-        print(__FUNCTION__)
         if let text = message[ MESSAGE_TRIAL_TEXT ] as? String,
-            mode = message[ MESSAGE_TRIAL_MODE ] as? String,
-            num = message[ MESSAGE_TRIAL_NUM ] as? Int {
-                self.setupTrial( StringToTextMode( mode ), trialText : text, trialNum: num + 1 )
+               mode = message[ MESSAGE_TRIAL_MODE ] as? String,
+               num = message[ MESSAGE_TRIAL_NUM ] as? Int {
+            self.setupTrial( StringToTextMode( mode ), trialText : text, trialNum: num + 1 )
+        } else if let state = message[ MESSAGE_TRIAL_STATE ] as? String where state == MESSAGE_TRIAL_STATE_CANCEL {
+            self.didTrialRan = false
+            self.setButtonState( false, trial : nil, mode : nil )
         }
     }
 
@@ -90,14 +86,14 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
 
     @IBAction func StartButton() {
         if let mode = self.trialMode {
-            pushControllerWithName( mode.controllerName, context : self.trialData )
+            self.pushControllerWithName( mode.controllerName, context : self.trialData )
+            self.didTrialRan = true
             let session = WCSession.defaultSession()
             let message = [ MESSAGE_TRIAL_STATE : MESSAGE_TRIAL_STATE_STARTED as AnyObject ]
             do {
                 try session.updateApplicationContext( message )
             } catch {
             }
-            self.didTrialRan = true
         }
     }
     

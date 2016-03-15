@@ -20,6 +20,7 @@ let MESSAGE_TRIAL_NUM = "num"
 let MESSAGE_TRIAL_STATE = "message"
 let MESSAGE_TRIAL_STATE_STARTED = "started"
 let MESSAGE_TRIAL_STATE_FINISHED = "finished"
+let MESSAGE_TRIAL_STATE_CANCEL = "cancel"
 let TRIALS_PER_GROUP = 20
 let TRIAL_GROUP_TEXTS : [ Int : [ String ] ] =
     [ 0 : [ "President Obama and Prime Minister Trudeau promised to make it easier for their countries to trade, invest in one another, and promote clean energy.",
