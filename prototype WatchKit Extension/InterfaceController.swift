@@ -207,7 +207,7 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
         let adjustedTime = ( ( Float( totalFrames ) + 1 ) / Float( totalFrames ) ) * time
         let interval = NSTimeInterval.init( adjustedTime )
                         
-        return ( UIImage.animatedImageWithImages( frames, duration : interval ), totalFrames, interval )
+        return ( UIImage.animatedImageWithImages( frames, duration : interval ), totalFrames + 1, interval )
     }
 
     

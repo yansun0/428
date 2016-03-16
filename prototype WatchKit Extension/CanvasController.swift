@@ -13,6 +13,7 @@ class CanvasController : WKInterfaceController {
     
     @IBOutlet var canvas: WKInterfaceImage!
     
+    var ran = false
     var timeout : NSTimer?
     var duration : NSTimeInterval?
     var frameCount : Int?
@@ -31,11 +32,10 @@ class CanvasController : WKInterfaceController {
     }
     
 
-    
     override func willActivate() {
         super.willActivate()
         
-        if let count = self.frameCount, dur = self.duration {
+        if let count = self.frameCount, dur = self.duration where self.ran == false{
             let imageRange : NSRange = NSRange.init( 0 ... ( count - 1 ) )
             // add half second delay before animating so that user can have a moment to focus on the text location
             dispatch_after(
@@ -43,7 +43,7 @@ class CanvasController : WKInterfaceController {
                 dispatch_get_main_queue(),
                 {
                     self.canvas.startAnimatingWithImagesInRange( imageRange, duration: dur, repeatCount : 1 )
-                    
+                    self.ran = true
                     // end timer
 //                    self.timeout = NSTimer.scheduledTimerWithTimeInterval( dur,
 //                        target : self, selector : "end",
