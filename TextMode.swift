@@ -13,7 +13,6 @@ import WatchKit
 #endif
 
 let IS_DEV : Bool = false
-let TRIAL_TIME : Int = 10
 let MESSAGE_TRIAL_TEXT = "text"
 let MESSAGE_TRIAL_DURATION = "duration"
 let MESSAGE_TRIAL_MODE = "mode"
@@ -23,7 +22,7 @@ let MESSAGE_TRIAL_STATE = "message"
 let MESSAGE_TRIAL_STATE_STARTED = "started"
 let MESSAGE_TRIAL_STATE_FINISHED = "finished"
 let MESSAGE_TRIAL_STATE_CANCEL = "cancel"
-let TRIALS_PER_GROUP = 20
+let TRIALS_PER_GROUP = 17
 let TRIAL_GROUP_TEXTS : [ Int : [ String ] ] =
     [ 0 : [ "California lawmakers voted to raise the smoking age from 18 to 21, it is the second state to restrict teenagers from buying tobacco products.",
             "A 93-year-old Ohio woman has received the high school diploma she was denied because of rules that expelled married students.",
