@@ -91,7 +91,7 @@ class ViewController: UIViewController, WCSessionDelegate {
     func getMessageForWatch( groupNum : Int,
                              trialNum : Int,
                              isCancel : Bool ) -> [ String : AnyObject ] {
-        let text : String = TRIAL_GROUP_TEXTS[ self.group ]![ self.trial ]
+        let text : String = TRIAL_TEXTS[ self.trial ]
         let mode : TextMode = TRIAL_GROUP_MODES[ self.group ]![ self.trial ]
         let message : [ String : AnyObject ] = isCancel ?
             [ MESSAGE_TRIAL_STATE : MESSAGE_TRIAL_STATE_CANCEL as AnyObject ] :
@@ -136,11 +136,11 @@ class ViewController: UIViewController, WCSessionDelegate {
                 
                 let refreshAlert = UIAlertController(
                     title : "Complete",
-                    message : String( format: "User compeleted trial %d of %d", self.trial + 1, TRIALS_PER_GROUP ),
+                    message : String( format: "User compeleted trial %d of %d", self.trial + 1, TRIALS_TOTAL ),
                     preferredStyle : UIAlertControllerStyle.Alert )
 
                 let alertActionNext = UIAlertAction(
-                    title : ( ( self.trial < TRIALS_PER_GROUP ) ? "Next Trial" : "End Study" ),
+                    title : ( ( self.trial < TRIALS_TOTAL ) ? "Next Trial" : "End Study" ),
                     style: .Default,
                     handler: { ( action: UIAlertAction! ) in
                         self.trial = self.trial + 1
