@@ -10,13 +10,13 @@ import UIKit
 import WatchConnectivity
 
 
-class ViewController: UIViewController, WCSessionDelegate {
+class ViewController: UIViewController, WCSessionDelegate, UITextFieldDelegate {
     
     var group : Int = 0
     var mode : TextMode = TextMode.RSVP
     var trial : Int = 0
     
-    
+    @IBOutlet weak var trialNum: UITextField!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var testRunSelector: UISegmentedControl!
     @IBOutlet weak var sendToWatchBtn: UIButton!
@@ -25,14 +25,17 @@ class ViewController: UIViewController, WCSessionDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if (WCSession.isSupported()) {
             let session = WCSession.defaultSession()
             session.delegate = self;
             session.activateSession()
         }
     }
-    
+
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
+    }
     
     @IBAction func sendTestToWatchBtnTapped(sender: AnyObject) {
         let mode : TextMode = ( self.testRunSelector.selectedSegmentIndex == 0 ) ?
@@ -42,7 +45,6 @@ class ViewController: UIViewController, WCSessionDelegate {
         let msg = getTestMessageForWatch( mode )
         self.sendMessageToWatch( msg )
     }
-    
     
     @IBAction func segmentedControlAction( sender: AnyObject ) {
         self.group = self.segmentedControl.selectedSegmentIndex
@@ -63,6 +65,7 @@ class ViewController: UIViewController, WCSessionDelegate {
     
     
     @IBAction func sendToWatchBtnTapped( sender : UIButton! ) {
+        self.trial = max( Int( self.trialNum.text! )! - 1, self.trial )
         let msg = self.getMessageForWatch( self.group, trialNum: self.trial, isCancel: false )
         self.sendMessageToWatch( msg )
         self.sendToWatchBtn.enabled = false
@@ -92,14 +95,14 @@ class ViewController: UIViewController, WCSessionDelegate {
                              trialNum : Int,
                              isCancel : Bool ) -> [ String : AnyObject ] {
         let text : String = TRIAL_TEXTS[ self.trial ]
-        let mode : TextMode = TRIAL_GROUP_MODES[ self.group ]![ self.trial ]
+        let mode : TextMode = TRIAL_GROUP_MODES[ self.group ]![ trialNum ]
         let message : [ String : AnyObject ] = isCancel ?
             [ MESSAGE_TRIAL_STATE : MESSAGE_TRIAL_STATE_CANCEL as AnyObject ] :
             [ MESSAGE_TRIAL_MODE : TextModeToString( mode ) as AnyObject,
               MESSAGE_TRIAL_TEXT : text as AnyObject,
               MESSAGE_TRIAL_DURATION : getTimeForText( text ) as AnyObject,
               MESSAGE_TRIAL_TEST_RUN : false as AnyObject,
-              MESSAGE_TRIAL_NUM : self.trial as AnyObject ]
+              MESSAGE_TRIAL_NUM : trialNum as AnyObject ]
         return message
     }
     
