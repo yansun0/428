@@ -121,16 +121,18 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
     // prepares the trial before the start button is pressed so to reduce wait time
     func setupTrial( mode : TextMode, trialText : String, duration : Float, trialNum : Int ) {
         self.trialMode = mode
-        var data : [ String : AnyObject ] = [ "duration" : NSTimeInterval.init( duration ) ]
+        var data = [ String : AnyObject ]()
         switch mode {
             case TextMode.Ticker, TextMode.RSVP:
                 let renderedResult = self.render( mode, text : trialText, time : duration );
                 data[ "img" ] = renderedResult.image
                 data[ "frameCount" ] = renderedResult.frameCount
+                data[ "duration" ] = renderedResult.duration
                 break;
             case TextMode.Scroll:
                 data[ "text" ] = trialText
                 data[ "attrs" ] = mode.attributes
+                data[ "duration" ] = NSTimeInterval.init( duration )
                 break;
         }
         self.trialData = data
@@ -138,22 +140,23 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
     }
     
     
-    func render( mode : TextMode, text : String, time : Float ) -> ( image : UIImage?, frameCount : Int ) {
+    func render( mode : TextMode, text : String, time : Float ) -> ( image : UIImage?, frameCount : Int, duration : NSTimeInterval ) {
         // rendering constants
-        let fps : CGFloat = 30.0
         let canvasHeightScale : CGFloat = 0.2
         var canvasSize : CGSize = WKInterfaceDevice.currentDevice().screenBounds.size
         canvasSize.height = canvasSize.height * canvasHeightScale
         return ( mode == TextMode.Ticker ) ?
-            self.renderTicker( mode, text : text, time : time, fps : fps, canvasSize : canvasSize ) :
-            self.renderRSVP( mode, text : text, time : time, fps : fps, canvasSize : canvasSize )
+            self.renderTicker( mode, text : text, time : time, canvasSize : canvasSize ) :
+            self.renderRSVP( mode, text : text, time : time, canvasSize : canvasSize )
     }
     
     
     // do the rendering here BEFORE transitioning to reduce loading time AFTER transition
     func renderTicker( mode : TextMode, text : String,
-                       time : Float, fps : CGFloat,
-                       canvasSize : CGSize ) -> ( image : UIImage?, frameCount : Int ) {
+                       time : Float, canvasSize : CGSize ) -> ( image : UIImage?, frameCount : Int, duration : NSTimeInterval ) {
+                        
+        let fps : CGFloat = 30.0
+
         // start the text half way into the screen
         var textOffset : CGPoint = CGPointMake( canvasSize.width / 2, ( canvasSize.height - mode.fontSize ) / 2 )
         let totalFrames : Int = Int( round( fps * CGFloat( time ) ) )
@@ -172,14 +175,13 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
             textOffset.x = textOffset.x - scrollRate
             frames.append( self.renderFrame( text, textAttrs : mode.attributes, offset : textOffset, canvasSize : canvasSize ) )
         }
-        
-        return ( UIImage.animatedImageWithImages( frames, duration: NSTimeInterval.init( time ) ), totalFrames )
+        let interval = NSTimeInterval.init( time )
+        return ( UIImage.animatedImageWithImages( frames, duration: interval ), totalFrames, interval )
     }
     
     
     func renderRSVP( mode : TextMode, text : String,
-                     time : Float, fps : CGFloat,
-                     canvasSize : CGSize ) -> ( image : UIImage?, frameCount : Int ) {
+                     time : Float, canvasSize : CGSize ) -> ( image : UIImage?, frameCount : Int, duration : NSTimeInterval ) {
         // split words by white spaces only
         let words : [String] = text.componentsSeparatedByCharactersInSet( NSCharacterSet.whitespaceAndNewlineCharacterSet() )
         let totalFrames : Int = words.count
@@ -199,8 +201,13 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
             wordOffset = CGPointMake( ( canvasSize.width - wordSize.width ) / 2, ( canvasSize.height - wordSize.height ) / 2 )
             frames.append( self.renderFrame( word, textAttrs : mode.attributes, offset : wordOffset, canvasSize : canvasSize ) )
         }
-
-        return ( UIImage.animatedImageWithImages( frames, duration : NSTimeInterval.init( time ) ), totalFrames )
+                        
+        // append empty frame and recalcuate the time
+        frames.append( self.renderFrame( "", textAttrs: [ String : AnyObject](), offset: CGPointZero, canvasSize: canvasSize ) )
+        let adjustedTime = ( ( Float( totalFrames ) + 1 ) / Float( totalFrames ) ) * time
+        let interval = NSTimeInterval.init( adjustedTime )
+                        
+        return ( UIImage.animatedImageWithImages( frames, duration : interval ), totalFrames, interval )
     }
 
     

@@ -23,7 +23,7 @@ class ScrollController : WKInterfaceController {
                time = data[ "duration" ] as? NSTimeInterval {
                 
             let attrText = NSAttributedString.init( string : text, attributes : attrs )
-            label.setAttributedText( attrText )
+            self.label.setAttributedText( attrText )
 
             self.timeout = NSTimer.scheduledTimerWithTimeInterval( time,
                 target : self, selector : "end",
@@ -32,7 +32,8 @@ class ScrollController : WKInterfaceController {
     }
     
     func end() {
-        self.popController()
+//        self.popController()
+        self.label.setHidden( true )
         self.timeout?.invalidate()
     }
 
