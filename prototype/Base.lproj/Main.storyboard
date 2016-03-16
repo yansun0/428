@@ -51,12 +51,12 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="6cp-gk-mbU">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="6cp-gk-mbU">
                                 <rect key="frame" x="186" y="115" width="228" height="29"/>
                                 <segments>
-                                    <segment title="Scroll"/>
-                                    <segment title="RSVP"/>
-                                    <segment title="Ticker"/>
+                                    <segment title="Scroll" width="75.333333333333329"/>
+                                    <segment title="RSVP" width="75.333333333333329"/>
+                                    <segment title="Ticker" width="75.333333333333329"/>
                                 </segments>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trial Trial" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Fk-sK-CFM">
@@ -65,7 +65,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="guJ-UD-APe">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="guJ-UD-APe">
                                 <rect key="frame" x="212" y="181" width="177" height="30"/>
                                 <state key="normal" title="Start test on Apple Watch"/>
                                 <connections>
@@ -84,9 +84,12 @@
                             <constraint firstItem="6Fk-sK-CFM" firstAttribute="centerX" secondItem="6cp-gk-mbU" secondAttribute="centerX" id="Tce-TF-lT0"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zMA-ca-P2c" secondAttribute="bottom" constant="71" id="Uxs-8b-QXs"/>
                             <constraint firstItem="yYd-0f-C56" firstAttribute="top" secondItem="6Fk-sK-CFM" secondAttribute="bottom" constant="49" id="X8A-xE-oW5"/>
+                            <constraint firstItem="guJ-UD-APe" firstAttribute="centerX" secondItem="6cp-gk-mbU" secondAttribute="centerX" id="fAz-9x-RJ9"/>
                             <constraint firstItem="6Fk-sK-CFM" firstAttribute="centerX" secondItem="Da4-SQ-H56" secondAttribute="centerX" id="m9s-wy-epv"/>
+                            <constraint firstItem="6Fk-sK-CFM" firstAttribute="top" secondItem="guJ-UD-APe" secondAttribute="bottom" constant="76" id="nOD-jP-F1I"/>
                             <constraint firstItem="6Fk-sK-CFM" firstAttribute="top" secondItem="6cp-gk-mbU" secondAttribute="bottom" constant="144" id="sWU-q4-jP1"/>
                             <constraint firstItem="yYd-0f-C56" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vGQ-nI-vAD"/>
+                            <constraint firstItem="guJ-UD-APe" firstAttribute="top" secondItem="6cp-gk-mbU" secondAttribute="bottom" constant="38" id="w0z-my-93V"/>
                         </constraints>
                     </view>
                     <connections>

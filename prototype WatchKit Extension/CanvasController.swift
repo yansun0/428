@@ -28,7 +28,7 @@ class CanvasController : WKInterfaceController {
                 
                 // add half second delay before animating so that user can have a moment to focus on the text location
                 dispatch_after(
-                    dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC/2)),
+                    dispatch_time( DISPATCH_TIME_NOW, Int64( NSEC_PER_SEC / 2 ) ),
                     dispatch_get_main_queue(),
                     {
                         self.canvas.startAnimatingWithImagesInRange( imageRange, duration: dur, repeatCount : 0 )

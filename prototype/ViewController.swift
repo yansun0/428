@@ -69,20 +69,20 @@ class ViewController: UIViewController, WCSessionDelegate {
     }
     
     
-    func getTimeForText( text : String, mode : TextMode ) -> Float {
+    func getTimeForText( text : String ) -> Float {
         let WPM : Float = 200.0
         let numOfWords : Float = Float(text.componentsSeparatedByString(" ").count)
         let numOfChars : Float = Float(text.characters.count)
         let durationForWords : Float = ( numOfWords * 60.0 ) / WPM
         let durationForChars : Float = ( 60.0 * numOfChars ) / (WPM * 5)
-        return ((durationForChars + durationForWords) / 2.0) - ( mode == TextMode.Scroll ? 0.0 : 0.5 )
+        return ((durationForChars + durationForWords) / 2.0)
     }
     
     
     func getTestMessageForWatch( mode : TextMode ) -> [ String : AnyObject ] {
         return[ MESSAGE_TRIAL_MODE : TextModeToString( mode ) as AnyObject,
                 MESSAGE_TRIAL_TEXT : TEST_RUN_TEXT as AnyObject,
-                MESSAGE_TRIAL_DURATION : getTimeForText( TEST_RUN_TEXT, mode : mode ) as AnyObject,
+                MESSAGE_TRIAL_DURATION : getTimeForText( TEST_RUN_TEXT ) as AnyObject,
                 MESSAGE_TRIAL_TEST_RUN : true as AnyObject,
                 MESSAGE_TRIAL_NUM : 0 as AnyObject ]
     }
@@ -97,7 +97,7 @@ class ViewController: UIViewController, WCSessionDelegate {
             [ MESSAGE_TRIAL_STATE : MESSAGE_TRIAL_STATE_CANCEL as AnyObject ] :
             [ MESSAGE_TRIAL_MODE : TextModeToString( mode ) as AnyObject,
               MESSAGE_TRIAL_TEXT : text as AnyObject,
-              MESSAGE_TRIAL_DURATION : getTimeForText( text, mode : mode ) as AnyObject,
+              MESSAGE_TRIAL_DURATION : getTimeForText( text ) as AnyObject,
               MESSAGE_TRIAL_TEST_RUN : false as AnyObject,
               MESSAGE_TRIAL_NUM : self.trial as AnyObject ]
         return message

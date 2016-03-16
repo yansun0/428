@@ -151,7 +151,10 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
     
     
     // do the rendering here BEFORE transitioning to reduce loading time AFTER transition
-    func renderTicker( mode : TextMode, text : String, time : Float, fps : CGFloat, canvasSize : CGSize ) -> ( image : UIImage?, frameCount : Int ) {
+    func renderTicker( mode : TextMode, text : String,
+                       time : Float, fps : CGFloat,
+                       canvasSize : CGSize ) -> ( image : UIImage?, frameCount : Int ) {
+        // start the text half way into the screen
         var textOffset : CGPoint = CGPointMake( canvasSize.width / 2, ( canvasSize.height - mode.fontSize ) / 2 )
         let totalFrames : Int = Int( round( fps * CGFloat( time ) ) )
         var frames = [ UIImage ]()
@@ -174,12 +177,16 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
     }
     
     
-    func renderRSVP( mode : TextMode, text : String, time : Float, fps : CGFloat, canvasSize : CGSize ) -> ( image : UIImage?, frameCount : Int ) {
+    func renderRSVP( mode : TextMode, text : String,
+                     time : Float, fps : CGFloat,
+                     canvasSize : CGSize ) -> ( image : UIImage?, frameCount : Int ) {
+        // split words by white spaces only
         let words : [String] = text.componentsSeparatedByCharactersInSet( NSCharacterSet.whitespaceAndNewlineCharacterSet() )
         let totalFrames : Int = words.count
         var frames = [ UIImage ]()
         
-        let maxSize : CGSize = CGSizeMake( canvasSize.width, mode.fontSize ) // assume words are not gonna be longer than screen
+        // assume words are not gonna be longer than screen
+        let maxSize : CGSize = CGSizeMake( canvasSize.width, mode.fontSize )
         let strOpts : NSStringDrawingOptions = [
             NSStringDrawingOptions.UsesLineFragmentOrigin,
             NSStringDrawingOptions.TruncatesLastVisibleLine ]
@@ -204,7 +211,5 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
         UIGraphicsEndImageContext()
         return result
     }
-    
-    
     
 }
