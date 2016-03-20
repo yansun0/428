@@ -25,19 +25,37 @@ class ViewController: UIViewController, WCSessionDelegate, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (WCSession.isSupported()) {
+        if ( WCSession.isSupported() ) {
             let session = WCSession.defaultSession()
             session.delegate = self;
             session.activateSession()
         }
+        self.trialNum.delegate = self
     }
 
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        view.endEditing(true)
-        super.touchesBegan(touches, withEvent: event)
+    
+    // UI: keyboard
+    
+    override func touchesBegan( touches: Set<UITouch>, withEvent event: UIEvent? ) {
+        super.touchesBegan( touches, withEvent: event )
+        view.endEditing( true )
     }
     
-    @IBAction func sendTestToWatchBtnTapped(sender: AnyObject) {
+    
+    func textFieldDidEndEditing( textField: UITextField ) {
+        if let textNum = textField.text {
+            if let trialNum = Int( textNum ) {
+                self.trial = trialNum - 1
+                return
+            }
+        }
+        textField.text = String( self.trial + 1 )
+    }
+
+    
+    // UI: buttons
+    
+    @IBAction func sendTestToWatchBtnTapped( sender: AnyObject ) {
         let mode : TextMode = ( self.testRunSelector.selectedSegmentIndex == 0 ) ?
                                 TextMode.Scroll :
                                 ( ( self.testRunSelector.selectedSegmentIndex == 1 ) ?
@@ -46,26 +64,34 @@ class ViewController: UIViewController, WCSessionDelegate, UITextFieldDelegate {
         self.sendMessageToWatch( msg )
     }
     
+    
     @IBAction func segmentedControlAction( sender: AnyObject ) {
         self.group = self.segmentedControl.selectedSegmentIndex
     }
     
     
-    @IBAction func resetStudyAction( sender: AnyObject ) {
-        self.resetStudy()
+    @IBAction func resetWatchAction(sender: AnyObject) {
+        self.reset( false )
     }
     
     
-    func resetStudy() {
-        self.trial = 0
-        self.sendToWatchBtn.enabled = true
+    @IBAction func resetStudyAction( sender: AnyObject ) {
+        self.reset( true )
+    }
+    
+    
+    func reset( trial : Bool ) {
+        if trial {
+            self.trial = 0
+            self.trialNum.text = String( self.trial + 1 )
+        }
         let msg = self.getMessageForWatch( self.group, trialNum: self.trial, isCancel: true )
         self.sendMessageToWatch( msg )
+        self.sendToWatchBtn.enabled = true
     }
     
     
     @IBAction func sendToWatchBtnTapped( sender : UIButton! ) {
-        self.trial = max( Int( self.trialNum.text! )! - 1, self.trial )
         let msg = self.getMessageForWatch( self.group, trialNum: self.trial, isCancel: false )
         self.sendMessageToWatch( msg )
         self.sendToWatchBtn.enabled = false
@@ -135,44 +161,34 @@ class ViewController: UIViewController, WCSessionDelegate, UITextFieldDelegate {
                 self.sendToWatchBtn.enabled = false
                 
             } else if ( msg == MESSAGE_TRIAL_STATE_FINISHED ) {
-                self.sendToWatchBtn.enabled = true
                 
                 let refreshAlert = UIAlertController(
                     title : "Complete",
                     message : String( format: "User compeleted trial %d of %d", self.trial + 1, TRIALS_TOTAL ),
                     preferredStyle : UIAlertControllerStyle.Alert )
 
-                let alertActionNext = UIAlertAction(
-                    title : ( ( self.trial < TRIALS_TOTAL ) ? "Next Trial" : "End Study" ),
-                    style: .Default,
+                let alertActionOk = UIAlertAction(
+                    title : "OK",
+                    style: UIAlertActionStyle.Default,
                     handler: { ( action: UIAlertAction! ) in
                         self.trial = self.trial + 1
-                        if (self.trial < TRIALS_PER_GROUP) {
-                            let msg = self.getMessageForWatch( self.group, trialNum: self.trial, isCancel: false )
-                            self.sendMessageToWatch( msg )
+                        if self.trial < TRIALS_TOTAL {
+                            self.trialNum.text = String( self.trial + 1 )
+                            self.sendToWatchBtn.enabled = true
                         } else {
-                            self.resetStudy()         // trials done
+                            self.reset( true )
                         }
                 } )
-                refreshAlert.addAction(alertActionNext)
+                refreshAlert.addAction(alertActionOk)
                 
                 let alertActionRedo = UIAlertAction(
-                    title : "Redo Trial",
-                    style: .Default,
+                    title : "Redo",
+                    style: UIAlertActionStyle.Destructive,
                     handler: { ( action: UIAlertAction! ) in
                         let msg = self.getMessageForWatch( self.group, trialNum: self.trial, isCancel: false )
                         self.sendMessageToWatch( msg )
                 } )
                 refreshAlert.addAction(alertActionRedo)
-                
-                let alertActionCancel = UIAlertAction(
-                    title : "Cancel",
-                    style: .Cancel,
-                    handler: { ( action: UIAlertAction! ) in
-                        let msg = self.getMessageForWatch( self.group, trialNum: self.trial, isCancel: true )
-                        self.sendMessageToWatch( msg )
-                } )
-                refreshAlert.addAction(alertActionCancel)
                 
                 presentViewController(refreshAlert, animated: true, completion: nil)
             }

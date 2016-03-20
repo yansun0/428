@@ -110,7 +110,7 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
         self.button.setEnabled( isEnabled )
         if isEnabled {
             if let trialNum = trial, modeText = mode {
-                self.message.setText( String( format: "trial: %d\nmode: %@", trialNum, modeText ) )
+                self.message.setText( String( format: "trial: %d of %d\nmode: %@", trialNum, TRIALS_TOTAL, modeText ) )
             }
         } else {
             self.message.setText( "Please wait for the next trial to start." )

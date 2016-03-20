@@ -32,9 +32,17 @@ class ScrollController : WKInterfaceController {
     }
     
     func end() {
-//        self.popController()
         self.label.setHidden( true )
         self.timeout?.invalidate()
+        
+        // add half second delay transitioning
+        dispatch_after(
+            dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC/2)),
+            dispatch_get_main_queue(),
+            {
+                self.popController()
+            }
+        )
     }
 
 }

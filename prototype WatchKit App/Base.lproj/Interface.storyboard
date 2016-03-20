@@ -15,7 +15,7 @@
                                 <label width="1" height="1" alignment="left" text="Please wait for the next trial to start." textAlignment="center" numberOfLines="0" id="9c7-nG-JUA"/>
                             </items>
                         </group>
-                        <button width="1" height="0.40000000000000002" alignment="left" title="Start" id="gNs-eJ-GcX">
+                        <button width="1" height="0.40000000000000002" alignment="left" title="Start" enabled="NO" id="gNs-eJ-GcX">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" red="0.60784313725490191" green="1" blue="0.031372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" weight="medium" pointSize="28"/>

@@ -18,14 +18,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hqj-f3-KKK">
-                                <rect key="frame" x="206" y="434" width="189" height="30"/>
-                                <state key="normal" title="Start study on Apple Watch"/>
+                                <rect key="frame" x="234" y="360" width="133" height="30"/>
+                                <state key="normal" title="Start trial on Watch"/>
                                 <connections>
                                     <action selector="sendToWatchBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Vh-JC-9O7"/>
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yYd-0f-C56">
-                                <rect key="frame" x="186" y="357" width="228" height="29"/>
+                                <rect key="frame" x="186" y="262" width="228" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="228" id="rm8-q9-QAU"/>
                                 </constraints>
@@ -39,20 +39,20 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zMA-ca-P2c">
-                                <rect key="frame" x="259" y="499" width="82" height="30"/>
+                                <rect key="frame" x="259" y="550" width="82" height="30"/>
                                 <state key="normal" title="Reset study"/>
                                 <connections>
                                     <action selector="resetStudyAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VI5-am-dBC"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pre Trial" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Da4-SQ-H56">
-                                <rect key="frame" x="269" y="48" width="63" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Pre Trial" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Da4-SQ-H56">
+                                <rect key="frame" x="269" y="60" width="63" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="6cp-gk-mbU">
-                                <rect key="frame" x="186" y="115" width="228" height="29"/>
+                                <rect key="frame" x="186" y="97" width="228" height="29"/>
                                 <segments>
                                     <segment title="Scroll" width="75.333333333333329"/>
                                     <segment title="RSVP" width="75.333333333333329"/>
@@ -60,47 +60,68 @@
                                 </segments>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trial Trial" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Fk-sK-CFM">
-                                <rect key="frame" x="265" y="287" width="70" height="21"/>
+                                <rect key="frame" x="265" y="221" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="guJ-UD-APe">
-                                <rect key="frame" x="212" y="181" width="177" height="30"/>
-                                <state key="normal" title="Start test on Apple Watch"/>
-                                <connections>
-                                    <action selector="sendTestToWatchBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YKa-Ya-zA8"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="20p-do-a8S">
-                                <rect key="frame" x="252" y="396" width="97" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="20p-do-a8S">
+                                <rect key="frame" x="252" y="310" width="97" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="97" id="8e5-vQ-agY"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lJA-lG-aJO">
+                                <rect key="frame" x="257" y="500" width="87" height="30"/>
+                                <state key="normal" title="Reset Watch"/>
+                                <connections>
+                                    <action selector="resetWatchAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cNX-AD-CHU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="guJ-UD-APe">
+                                <rect key="frame" x="234" y="145" width="133" height="30"/>
+                                <state key="normal" title="Start test on Watch"/>
+                                <connections>
+                                    <action selector="sendTestToWatchBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YKa-Ya-zA8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zMA-ca-P2c" firstAttribute="centerX" secondItem="Hqj-f3-KKK" secondAttribute="centerX" id="1o7-3k-mGD"/>
                             <constraint firstItem="6Fk-sK-CFM" firstAttribute="centerX" secondItem="yYd-0f-C56" secondAttribute="centerX" id="7Am-E7-Tju"/>
-                            <constraint firstItem="zMA-ca-P2c" firstAttribute="top" secondItem="Hqj-f3-KKK" secondAttribute="bottom" constant="35" id="7WG-sG-P9y"/>
-                            <constraint firstItem="Da4-SQ-H56" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="28" id="9gI-Vd-HON"/>
-                            <constraint firstItem="yYd-0f-C56" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="337" id="Mhq-FO-QK9"/>
+                            <constraint firstItem="Da4-SQ-H56" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8Lw-Q6-h5M"/>
+                            <constraint firstItem="Da4-SQ-H56" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="9gI-Vd-HON"/>
+                            <constraint firstItem="6cp-gk-mbU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GAH-WU-Ry1"/>
+                            <constraint firstItem="guJ-UD-APe" firstAttribute="centerX" secondItem="6cp-gk-mbU" secondAttribute="centerX" id="K4w-8n-htK"/>
+                            <constraint firstItem="Hqj-f3-KKK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="KDL-Qh-Z6t"/>
+                            <constraint firstItem="20p-do-a8S" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="L1t-TB-HYh"/>
+                            <constraint firstItem="20p-do-a8S" firstAttribute="top" secondItem="yYd-0f-C56" secondAttribute="bottom" constant="20" id="LUk-ao-GuF"/>
+                            <constraint firstItem="yYd-0f-C56" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="242" id="Mhq-FO-QK9"/>
                             <constraint firstItem="yYd-0f-C56" firstAttribute="centerX" secondItem="Hqj-f3-KKK" secondAttribute="centerX" id="NH0-OW-WfB"/>
+                            <constraint firstItem="6cp-gk-mbU" firstAttribute="top" secondItem="Da4-SQ-H56" secondAttribute="bottom" constant="20" id="SzW-Co-2VK"/>
+                            <constraint firstItem="6Fk-sK-CFM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TcQ-Eq-NZQ"/>
                             <constraint firstItem="6Fk-sK-CFM" firstAttribute="centerX" secondItem="6cp-gk-mbU" secondAttribute="centerX" id="Tce-TF-lT0"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zMA-ca-P2c" secondAttribute="bottom" constant="71" id="Uxs-8b-QXs"/>
-                            <constraint firstItem="yYd-0f-C56" firstAttribute="top" secondItem="6Fk-sK-CFM" secondAttribute="bottom" constant="49" id="X8A-xE-oW5"/>
-                            <constraint firstItem="guJ-UD-APe" firstAttribute="centerX" secondItem="6cp-gk-mbU" secondAttribute="centerX" id="fAz-9x-RJ9"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zMA-ca-P2c" secondAttribute="bottom" constant="20" id="Uxs-8b-QXs"/>
+                            <constraint firstItem="yYd-0f-C56" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WTS-Us-kSE"/>
+                            <constraint firstItem="yYd-0f-C56" firstAttribute="top" secondItem="6Fk-sK-CFM" secondAttribute="bottom" constant="20" id="X8A-xE-oW5"/>
+                            <constraint firstItem="guJ-UD-APe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZTb-Kb-o5E"/>
+                            <constraint firstItem="Da4-SQ-H56" firstAttribute="centerX" secondItem="6cp-gk-mbU" secondAttribute="centerX" id="gKN-sW-oOa"/>
+                            <constraint firstItem="guJ-UD-APe" firstAttribute="top" secondItem="6cp-gk-mbU" secondAttribute="bottom" constant="20" id="iLK-aO-Nxj"/>
+                            <constraint firstItem="zMA-ca-P2c" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iTa-Kg-JJM"/>
                             <constraint firstItem="6Fk-sK-CFM" firstAttribute="centerX" secondItem="Da4-SQ-H56" secondAttribute="centerX" id="m9s-wy-epv"/>
-                            <constraint firstItem="6Fk-sK-CFM" firstAttribute="top" secondItem="guJ-UD-APe" secondAttribute="bottom" constant="76" id="nOD-jP-F1I"/>
-                            <constraint firstItem="6Fk-sK-CFM" firstAttribute="top" secondItem="6cp-gk-mbU" secondAttribute="bottom" constant="144" id="sWU-q4-jP1"/>
-                            <constraint firstItem="yYd-0f-C56" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vGQ-nI-vAD"/>
-                            <constraint firstItem="guJ-UD-APe" firstAttribute="top" secondItem="6cp-gk-mbU" secondAttribute="bottom" constant="38" id="w0z-my-93V"/>
-                            <constraint firstItem="Hqj-f3-KKK" firstAttribute="top" secondItem="20p-do-a8S" secondAttribute="bottom" constant="8" symbolic="YES" id="whL-O4-U4S"/>
+                            <constraint firstItem="6Fk-sK-CFM" firstAttribute="top" secondItem="6cp-gk-mbU" secondAttribute="bottom" constant="96" id="sWU-q4-jP1"/>
+                            <constraint firstItem="zMA-ca-P2c" firstAttribute="top" secondItem="lJA-lG-aJO" secondAttribute="bottom" constant="20" id="tTJ-Ae-6YG"/>
+                            <constraint firstItem="Hqj-f3-KKK" firstAttribute="top" secondItem="20p-do-a8S" secondAttribute="bottom" constant="20" id="whL-O4-U4S"/>
+                            <constraint firstItem="lJA-lG-aJO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xTS-8t-U7z"/>
                             <constraint firstItem="20p-do-a8S" firstAttribute="centerX" secondItem="Hqj-f3-KKK" secondAttribute="centerX" id="zX5-99-6bj"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Tce-TF-lT0"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="resetStudyButton" destination="zMA-ca-P2c" id="4DG-2J-5xj"/>

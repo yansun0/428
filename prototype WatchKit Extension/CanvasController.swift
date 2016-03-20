@@ -35,7 +35,7 @@ class CanvasController : WKInterfaceController {
     override func willActivate() {
         super.willActivate()
         
-        if let count = self.frameCount, dur = self.duration where self.ran == false{
+        if let count = self.frameCount, dur = self.duration where self.ran == false {
             let imageRange : NSRange = NSRange.init( 0 ... ( count - 1 ) )
             // add half second delay before animating so that user can have a moment to focus on the text location
             dispatch_after(
@@ -45,27 +45,28 @@ class CanvasController : WKInterfaceController {
                     self.canvas.startAnimatingWithImagesInRange( imageRange, duration: dur, repeatCount : 1 )
                     self.ran = true
                     // end timer
-//                    self.timeout = NSTimer.scheduledTimerWithTimeInterval( dur,
-//                        target : self, selector : "end",
-//                        userInfo : nil, repeats : true )
+                    self.timeout = NSTimer.scheduledTimerWithTimeInterval(
+                        dur * 1.5, // guesstimating here, but should be done in 1.5x the time
+                        target : self, selector : "end",
+                        userInfo : nil, repeats : true )
                 }
             )
         }
     }
     
     
-//    func end() {
-//        self.canvas.stopAnimating()
-//        self.timeout?.invalidate()
-//
-//        // add half second delay transitioning
-//        dispatch_after(
-//            dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC/2)),
-//            dispatch_get_main_queue(),
-//            {
-//                self.popController()
-//            }
-//        )
-//    }
+    func end() {
+        self.canvas.stopAnimating()
+        self.timeout?.invalidate()
+
+        // add half second delay transitioning
+        dispatch_after(
+            dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC/2)),
+            dispatch_get_main_queue(),
+            {
+                self.popController()
+            }
+        )
+    }
     
 }
