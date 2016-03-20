@@ -155,7 +155,7 @@ class InterfaceController : WKInterfaceController, WCSessionDelegate {
     func renderTicker( mode : TextMode, text : String,
                        time : Float, canvasSize : CGSize ) -> ( image : UIImage?, frameCount : Int, duration : NSTimeInterval ) {
                         
-        let fps : CGFloat = 30.0
+        let fps : CGFloat = 24.0
 
         // start the text half way into the screen
         var textOffset : CGPoint = CGPointMake( canvasSize.width / 2, ( canvasSize.height - mode.fontSize ) / 2 )
