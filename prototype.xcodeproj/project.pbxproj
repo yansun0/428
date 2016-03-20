@@ -456,7 +456,7 @@
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "prototype WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = yansun0.prototype.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = yansun0.prototype.watchkit.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
@@ -473,7 +473,7 @@
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "prototype WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = yansun0.prototype.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = yansun0.prototype.watchkit.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
@@ -494,7 +494,7 @@
 				IBSC_MODULE = prototype_WatchKit_Extension;
 				INFOPLIST_FILE = "prototype WatchKit App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = yansun0.prototype.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = yansun0.prototype.watchkit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
@@ -516,7 +516,7 @@
 				IBSC_MODULE = prototype_WatchKit_Extension;
 				INFOPLIST_FILE = "prototype WatchKit App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = yansun0.prototype.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = yansun0.prototype.watchkit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;

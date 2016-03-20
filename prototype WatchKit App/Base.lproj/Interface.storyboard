@@ -46,7 +46,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="467" y="-4"/>
+            <point key="canvasLocation" x="281" y="-4"/>
         </scene>
         <!--canvas-controller-->
         <scene sceneID="FK3-kr-otY">
@@ -60,7 +60,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="298" y="-4"/>
+            <point key="canvasLocation" x="438" y="-4"/>
         </scene>
     </scenes>
 </document>
